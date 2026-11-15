@@ -102,6 +102,18 @@ class OfferValueType(StrEnum):
     POINTS = "POINTS"
 
 
+class Severity(StrEnum):
+    """Guardrail outcome for one finding and for a whole draft (§9.3).
+
+    Precedence for aggregation: BLOCK > ESCALATE > WARN > PASS.
+    """
+
+    PASS = "PASS"
+    WARN = "WARN"
+    ESCALATE = "ESCALATE"
+    BLOCK = "BLOCK"
+
+
 class AccountStatus(StrEnum):
     ACTIVE = "ACTIVE"
     SUSPENDED = "SUSPENDED"
