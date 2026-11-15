@@ -1,3 +1,65 @@
 # Segment thresholds & tolerances.
-# Owner: M1. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Owner: M1. Values are ASSUMPTIONS (illustrative, configurable) — NOT official company policy.
+# Changing a value changes classification; re-run `make eval` and update docs/assumptions.md.
+version: "1.0"
+
+features:
+  min_active_days: 3          # a month counts as "active" with >= this many active days
+  grace_days: 0               # must equal grace_days in billing.yaml (M2)
+  bill_lookback_months: 3     # bills issued in the last N months are considered for bill state
+
+# Engagement axis, evaluated in this order; first match wins.
+engagement_order: [INSUFFICIENT_DATA, DORMANT, DECLINING_ACTIVITY, CONSISTENT, STANDARD]
+
+# Headline label = first of these present in the segment set (mirrors strategy precedence).
+primary_precedence:
+  - INSUFFICIENT_DATA
+  - PAYMENT_REMINDER
+  - LOYALTY_CANDIDATE
+  - DORMANT
+  - DECLINING_ACTIVITY
+  - CONSISTENT
+  - STANDARD
+
+segments:
+  INSUFFICIENT_DATA:
+    min_tenure_months: 3
+    tolerance_tenure_months: 3
+    min_months_observed: 3
+    tolerance_months_observed: 3
+    critical_features: [recent_activity_avg]
+
+  DORMANT:
+    min_inactive_days: 60     # days_since_last_activity >= 60
+    tolerance_days: 30
+
+  DECLINING_ACTIVITY:
+    min_prior_activity_avg: 5
+    tolerance_prior_avg: 5
+    max_trend_ratio: 0.70     # trend <= 0.70  (i.e. a drop of 30% or more)
+    tolerance_trend_ratio: 0.30
+
+  CONSISTENT:
+    min_active_months_last_6: 5
+    tolerance_active_months: 1
+    min_trend_ratio: 0.70     # trend > 0.70 (strictly)
+    tolerance_trend_ratio: 0.30
+    max_activity_cv: 0.50
+    tolerance_cv: 0.30
+    min_on_time_rate: 0.80
+    tolerance_on_time_rate: 0.20
+
+  LOYALTY_CANDIDATE:          # only possible when engagement = CONSISTENT
+    min_tenure_months: 12
+    tolerance_tenure_months: 12
+    min_on_time_rate: 0.90
+    tolerance_on_time_rate: 0.10
+    max_late_payments_last_6m: 0
+    min_active_plan_count: 1
+
+  PAYMENT_REMINDER:
+    bill_states: [OVERDUE, PARTIALLY_PAID_OVERDUE]
+
+confidence:
+  high: 0.75
+  medium: 0.45

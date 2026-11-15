@@ -1,0 +1,5 @@
+campaign_id,name,status,start_date,end_date,approved_by
+CMP-LOY-Q4,Loyalty Q4 2026,ACTIVE,2026-11-01,2026-12-31,marketing-lead
+CMP-LOY-Q2,Loyalty Q2 2026,ENDED,2026-04-01,2026-06-30,marketing-lead
+CMP-RE-Q4,Re-engagement Q4 2026,ACTIVE,2026-10-01,2026-12-31,marketing-lead
+CMP-PERK-PAUSED,Appreciation perk (paused),PAUSED,2026-10-01,2026-12-31,marketing-lead
