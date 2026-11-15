@@ -1,0 +1,177 @@
+# Offer eligibility case table (CLAUDE.md §14.2). Owner: M2.
+# Expected outcomes are written by hand from §6.4 — NOT copied from engine output.
+# as_of = 2026-11-15.
+#
+# Every case starts from the base below and applies its overrides:
+#   customer: loyal C0002-like (CONSISTENT + LOYALTY_CANDIDATE, 31 months, plan PL-POST-499,
+#             ACTIVE, bill PAID)
+#   offer:    OFF-LOY-200 (₹200 credit, valid 1 Nov - 31 Dec 2026, EMAIL, LOYALTY_CANDIDATE,
+#             min tenure 12, requires no overdue, 1 per customer, cap 500, 37 redeemed)
+#   campaign: CMP-LOY-Q4 ACTIVE 1 Nov - 31 Dec 2026
+#
+# expected.failed = the exact SET of fail codes ([] = eligible).
+# Tag "invalid" = the offer must be rejected (invalid-offer rejection rate, target 100%).
+
+- id: O01
+  desc: Base case is eligible
+  expected: {failed: []}
+- id: O02
+  desc: Expired offer
+  offer: {valid_from: "2026-04-01", valid_to: "2026-06-30"}
+  expected: {failed: [OFFER_EXPIRED]}
+  tags: [invalid]
+- id: O03
+  desc: Offer not started yet
+  offer: {valid_from: "2026-12-01"}
+  expected: {failed: [OFFER_NOT_STARTED]}
+  tags: [invalid]
+- id: O04
+  desc: Campaign paused
+  campaign: {status: PAUSED}
+  expected: {failed: [CAMPAIGN_NOT_ACTIVE]}
+  tags: [invalid]
+- id: O05
+  desc: Campaign status ACTIVE but its end date has passed
+  campaign: {end_date: "2026-11-10"}
+  expected: {failed: [CAMPAIGN_NOT_ACTIVE]}
+  tags: [invalid]
+- id: O06
+  desc: Offer refers to a campaign that does not exist
+  campaign: null
+  expected: {failed: [CAMPAIGN_DATA_MISSING]}
+  tags: [invalid]
+- id: O07
+  desc: Value is zero
+  offer: {value: 0}
+  expected: {failed: [OFFER_TERMS_INCOMPLETE]}
+  tags: [invalid]
+- id: O08
+  desc: Terms summary is empty
+  offer: {terms_summary: ""}
+  expected: {failed: [OFFER_TERMS_INCOMPLETE]}
+  tags: [invalid]
+- id: O09
+  desc: Unknown offer type
+  offer: {offer_type: MYSTERY_BOX}
+  expected: {failed: [OFFER_TERMS_INCOMPLETE]}
+  tags: [invalid]
+- id: O10
+  desc: SMS-only offer in an email
+  offer: {channel: SMS}
+  expected: {failed: [OFFER_CHANNEL_MISMATCH]}
+  tags: [invalid]
+- id: O11
+  desc: Offer for any channel is fine
+  offer: {channel: ANY}
+  expected: {failed: []}
+- id: O12
+  desc: Customer is consistent but not a loyalty candidate
+  customer: {segments: [CONSISTENT]}
+  expected: {failed: [OFFER_SEGMENT_INELIGIBLE]}
+  tags: [invalid]
+- id: O13
+  desc: Tenure 11 months, minimum is 12
+  customer: {tenure_months: 11}
+  expected: {failed: [OFFER_TENURE_SHORT]}
+  tags: [invalid]
+- id: O14
+  desc: Tenure exactly 12 months
+  customer: {tenure_months: 12}
+  expected: {failed: []}
+- id: O15
+  desc: Offer limited to another plan
+  offer: {eligible_plan_ids: [PL-PRE-199]}
+  expected: {failed: [OFFER_PLAN_MISMATCH]}
+  tags: [invalid]
+- id: O16
+  desc: Offer limited to plans that include the customer's plan
+  offer: {eligible_plan_ids: [PL-POST-499, PL-POST-599]}
+  expected: {failed: []}
+- id: O17
+  desc: Overdue bill blocks the reward (C0009)
+  customer: {bill_state: OVERDUE}
+  expected: {failed: [OFFER_BLOCKED_BY_BILLING]}
+  tags: [invalid]
+- id: O18
+  desc: Partially paid overdue bill blocks the reward
+  customer: {bill_state: PARTIALLY_PAID_OVERDUE}
+  expected: {failed: [OFFER_BLOCKED_BY_BILLING]}
+  tags: [invalid]
+- id: O19
+  desc: Disputed bill blocks the reward
+  customer: {bill_state: DISPUTED}
+  expected: {failed: [OFFER_BLOCKED_BY_BILLING]}
+  tags: [invalid]
+- id: O20
+  desc: Contradictory billing data blocks the reward
+  customer: {bill_state: DATA_CONFLICT}
+  expected: {failed: [OFFER_BLOCKED_BY_BILLING]}
+  tags: [invalid]
+- id: O21
+  desc: Bill not yet due does not block
+  customer: {bill_state: NOT_YET_DUE}
+  expected: {failed: []}
+- id: O22
+  desc: Overdue allowed when the offer does not require a clean bill
+  offer: {requires_no_overdue: false}
+  customer: {bill_state: OVERDUE}
+  expected: {failed: []}
+- id: O23
+  desc: Customer already redeemed it (limit 1)
+  redemptions: [{customer_id: C0002, ago: 100}]
+  expected: {failed: [OFFER_REDEMPTION_LIMIT]}
+  tags: [invalid]
+- id: O24
+  desc: Someone else's redemption does not count
+  redemptions: [{customer_id: C9999, ago: 100}]
+  expected: {failed: []}
+- id: O25
+  desc: Global cap reached
+  offer: {total_cap: 37}
+  expected: {failed: [OFFER_CAP_REACHED]}
+  tags: [invalid]
+- id: O26
+  desc: One redemption left under the cap
+  offer: {total_cap: 38}
+  expected: {failed: []}
+- id: O27
+  desc: Same offer emailed 10 days ago
+  history: [{offer_id: OFF-LOY-200, ago: 10}]
+  expected: {failed: [OFFER_DUPLICATE_RECENT]}
+  tags: [invalid]
+- id: O28
+  desc: Same offer emailed 30 days ago (window is 30)
+  history: [{offer_id: OFF-LOY-200, ago: 30}]
+  expected: {failed: []}
+- id: O29
+  desc: Suspended account
+  customer: {account_status: SUSPENDED}
+  expected: {failed: [ACCOUNT_NOT_ACTIVE]}
+  tags: [invalid]
+- id: O30
+  desc: Closed account
+  customer: {account_status: CLOSED}
+  expected: {failed: [ACCOUNT_NOT_ACTIVE]}
+  tags: [invalid]
+- id: O31
+  desc: Requested offer id does not exist
+  candidate_offer_ids: [OFF-DOES-NOT-EXIST]
+  expected: {failed: [OFFER_NOT_FOUND]}
+  tags: [invalid]
+- id: O32
+  desc: Requested offer id is malformed
+  candidate_offer_ids: ["off_lowercase"]
+  expected: {failed: [OFFER_ID_INVALID]}
+  tags: [invalid]
+- id: O33
+  desc: Several problems at once are all reported
+  offer: {valid_to: "2026-11-01", channel: SMS}
+  customer: {tenure_months: 5}
+  expected: {failed: [OFFER_EXPIRED, OFFER_CHANNEL_MISMATCH, OFFER_TENURE_SHORT]}
+  tags: [invalid]
+- id: O34
+  desc: Re-engagement bonus data for a declining customer (C0003)
+  offer: {offer_id: OFF-RE-5GB, offer_type: REENGAGEMENT, value_type: BONUS_DATA_GB, value: 5,
+          min_tenure_months: 0, eligible_segments: [DECLINING_ACTIVITY, DORMANT]}
+  customer: {segments: [DECLINING_ACTIVITY], tenure_months: 20}
+  expected: {failed: []}

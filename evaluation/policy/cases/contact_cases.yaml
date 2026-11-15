@@ -1,0 +1,85 @@
+# Contact gate case table (CLAUDE.md §6.5, §14.2). Owner: M2.
+# Expected outcomes written by hand from config/policies/contact.yaml. as_of = 2026-11-15.
+# Base: consents both given, no opt-out, preferred channel EMAIL, ACTIVE account, no history.
+# expected.reasons = exact list of refusal reasons ([] = allowed).
+
+- id: C01
+  desc: Consented, quiet customer, marketing email
+  category: MARKETING
+  expected: {reasons: []}
+- id: C02
+  desc: Opted out of all email (C0007)
+  category: MARKETING
+  prefs: {email_opt_out: true}
+  expected: {reasons: [CONTACT_EMAIL_OPT_OUT]}
+- id: C03
+  desc: Billing reminder allowed without marketing consent
+  category: SERVICE
+  objective: BILLING_REMINDER
+  prefs: {email_marketing_consent: false}
+  expected: {reasons: []}
+- id: C04
+  desc: Marketing email needs marketing consent
+  category: MARKETING
+  prefs: {email_marketing_consent: false}
+  expected: {reasons: [CONTACT_NO_MARKETING_CONSENT]}
+- id: C05
+  desc: Billing reminder needs service consent
+  category: SERVICE
+  prefs: {email_service_consent: false}
+  expected: {reasons: [CONTACT_NO_SERVICE_CONSENT]}
+- id: C06
+  desc: Closed account
+  category: SERVICE
+  account_status: CLOSED
+  expected: {reasons: [CONTACT_ACCOUNT_CLOSED]}
+- id: C07
+  desc: Temporarily suppressed until next week
+  category: MARKETING
+  prefs: {do_not_contact_until: "2026-11-22"}
+  expected: {reasons: [CONTACT_SUPPRESSED_UNTIL]}
+- id: C08
+  desc: Suppression ended today
+  category: MARKETING
+  prefs: {do_not_contact_until: "2026-11-15"}
+  expected: {reasons: []}
+- id: C09
+  desc: Preferred channel NONE
+  category: SERVICE
+  prefs: {preferred_channel: NONE}
+  expected: {reasons: [CONTACT_CHANNEL_NONE]}
+- id: C10
+  desc: Marketing email 13 days ago (gap is 14)
+  category: MARKETING
+  history: [{ago: 13, category: MARKETING, objective: APPRECIATION}]
+  expected: {reasons: [CONTACT_MARKETING_TOO_RECENT]}
+- id: C11
+  desc: Marketing email 14 days ago
+  category: MARKETING
+  history: [{ago: 14, category: MARKETING, objective: APPRECIATION}]
+  expected: {reasons: []}
+- id: C12
+  desc: Four emails in the last 30 days (cap is 4)
+  category: SERVICE
+  history:
+    - {ago: 1, category: SERVICE, objective: OTHER_1}
+    - {ago: 8, category: SERVICE, objective: OTHER_2}
+    - {ago: 15, category: SERVICE, objective: OTHER_3}
+    - {ago: 22, category: SERVICE, objective: OTHER_4}
+  expected: {reasons: [CONTACT_FREQUENCY_CAP]}
+- id: C13
+  desc: Same objective 6 days ago (window 7)
+  category: SERVICE
+  objective: BILLING_REMINDER
+  history: [{ago: 6, category: SERVICE, objective: BILLING_REMINDER}]
+  expected: {reasons: [CONTACT_DUPLICATE_OBJECTIVE]}
+- id: C14
+  desc: Everything wrong at once, every reason listed
+  category: MARKETING
+  prefs: {email_opt_out: true, email_marketing_consent: false, preferred_channel: NONE}
+  expected: {reasons: [CONTACT_EMAIL_OPT_OUT, CONTACT_CHANNEL_NONE, CONTACT_NO_MARKETING_CONSENT]}
+- id: C15
+  desc: Missing preference record is never guessed
+  category: SERVICE
+  prefs: null
+  expected: {reasons: [CONTACT_PREFERENCES_MISSING]}
