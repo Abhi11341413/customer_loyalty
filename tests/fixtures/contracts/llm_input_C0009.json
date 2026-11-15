@@ -1,0 +1,34 @@
+{
+  "first_name": "Yuki",
+  "objective": "BILLING_REMINDER_FOLLOWUP",
+  "segment_summary": "Bill for October 2026 overdue by 12 days; an earlier reminder was sent",
+  "tone": {
+    "name": "polite_follow_up",
+    "rules": []
+  },
+  "allowed_slots": {
+    "first_name": "Yuki",
+    "bill_period": "October 2026",
+    "amount_due": "₹499.00",
+    "original_amount": "₹499.00",
+    "due_date": "3 Nov 2026",
+    "days_overdue": "12",
+    "support_path": "Reply to this email or visit the Help section of your account to ask a question or raise a dispute.",
+    "plan_name": "Postpaid 499",
+    "pay_cta": "View and pay your bill"
+  },
+  "offer": null,
+  "required_disclaimers": [
+    "already_paid",
+    "support_dispute_path"
+  ],
+  "template_skeleton": "greeting -> follow-up on earlier reminder -> bill facts -> CTA -> support/dispute path -> sign-off",
+  "forbidden": [
+    "threats",
+    "legal action",
+    "late fees not provided",
+    "credit score",
+    "service suspension unless provided",
+    "internal segment names or scores"
+  ]
+}

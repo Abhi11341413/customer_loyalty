@@ -1,0 +1,26 @@
+{
+  "objective": "BILLING_REMINDER_FOLLOWUP",
+  "category": "SERVICE",
+  "template_id": "billing_reminder_stage2",
+  "template_version": "1.0",
+  "tone": "polite_follow_up",
+  "allowed_offer": null,
+  "required_disclaimer_keys": [
+    "already_paid",
+    "support_dispute_path"
+  ],
+  "cta_key": "pay_or_view",
+  "reminder_stage": 2,
+  "suppressed": [
+    {
+      "objective": "LOYALTY_REWARD",
+      "reason_codes": [
+        "STRATEGY_BILLING_PRIORITY"
+      ]
+    }
+  ],
+  "rationale_codes": [
+    "BILL_OVERDUE_DAYS:12",
+    "BILL_STAGE:2"
+  ]
+}

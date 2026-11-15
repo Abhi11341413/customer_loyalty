@@ -1,0 +1,12 @@
+{
+  "SERVICE": {
+    "allowed": true,
+    "category": "SERVICE",
+    "reasons": []
+  },
+  "MARKETING": {
+    "allowed": true,
+    "category": "MARKETING",
+    "reasons": []
+  }
+}

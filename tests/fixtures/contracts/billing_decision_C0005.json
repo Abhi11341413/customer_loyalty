@@ -1,0 +1,21 @@
+{
+  "state": "OVERDUE",
+  "reminder_allowed": true,
+  "escalate": false,
+  "stage": 1,
+  "bill_id": "B-C0005-2026-10",
+  "days_overdue": 5,
+  "outstanding_minor": 59900,
+  "verified_facts": {
+    "bill_period": "October 2026",
+    "amount_due": "₹599.00",
+    "original_amount": "₹599.00",
+    "due_date": "10 Nov 2026",
+    "days_overdue": "5",
+    "support_path": "Reply to this email or visit the Help section of your account to ask a question or raise a dispute."
+  },
+  "reason_codes": [
+    "BILL_OVERDUE_DAYS:5",
+    "BILL_STAGE:1"
+  ]
+}

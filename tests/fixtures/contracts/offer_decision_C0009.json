@@ -1,0 +1,42 @@
+{
+  "eligible": [],
+  "rejected": [
+    {
+      "offer_id": "OFF-LOY-200",
+      "eligible": false,
+      "failed_checks": [
+        "OFFER_BLOCKED_BY_BILLING"
+      ],
+      "offer": null
+    },
+    {
+      "offer_id": "OFF-LOY-OLD",
+      "eligible": false,
+      "failed_checks": [
+        "CAMPAIGN_NOT_ACTIVE",
+        "OFFER_EXPIRED",
+        "OFFER_BLOCKED_BY_BILLING"
+      ],
+      "offer": null
+    },
+    {
+      "offer_id": "OFF-PERK-10",
+      "eligible": false,
+      "failed_checks": [
+        "CAMPAIGN_NOT_ACTIVE",
+        "OFFER_BLOCKED_BY_BILLING"
+      ],
+      "offer": null
+    },
+    {
+      "offer_id": "OFF-RE-5GB",
+      "eligible": false,
+      "failed_checks": [
+        "OFFER_SEGMENT_INELIGIBLE",
+        "OFFER_BLOCKED_BY_BILLING"
+      ],
+      "offer": null
+    }
+  ],
+  "selected_offer_id": null
+}

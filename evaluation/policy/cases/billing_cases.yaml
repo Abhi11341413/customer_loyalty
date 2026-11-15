@@ -1,0 +1,167 @@
+# Billing policy case table (CLAUDE.md §14.2). Owner: M2.
+# Expected outcomes are written by hand from §6.1-6.3 + config/policies/billing.yaml — NOT
+# copied from engine output. All day counts are relative to as_of = 2026-11-15
+# ("due_ago: 5" = due 5 days before as_of; negative = in the future).
+#
+# Tags used for the §14.2 metrics:
+#   duplicate      -> a reminder must be blocked (duplicate-reminder prevention, target 100%)
+#   conflict       -> contradictory/missing data must escalate, never message (target 100%)
+#
+# Bill defaults: amount 59900, status UNPAID, dispute NONE, issue = due - 14 days.
+
+- id: B01
+  desc: Paid in full
+  bills: [{period: "2026-10", due_ago: 5, status: PAID}]
+  payments: [{period: "2026-10", ago: 8, amount: 59900}]
+  expected: {state: PAID, reminder_allowed: false}
+- id: B02
+  desc: Waived bill counts as paid
+  bills: [{period: "2026-10", due_ago: 20, status: WAIVED}]
+  expected: {state: PAID, reminder_allowed: false}
+- id: B03
+  desc: Unpaid, due in 5 days
+  bills: [{period: "2026-11", due_ago: -5}]
+  expected: {state: NOT_YET_DUE, reminder_allowed: false}
+- id: B04
+  desc: Due today is not overdue (grace 0)
+  bills: [{period: "2026-11", due_ago: 0}]
+  expected: {state: NOT_YET_DUE, reminder_allowed: false}
+- id: B05
+  desc: 1 day overdue, first reminder
+  bills: [{period: "2026-10", due_ago: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B06
+  desc: 10 days overdue, upper bound of stage 1
+  bills: [{period: "2026-10", due_ago: 10}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B07
+  desc: 11 days overdue but nothing sent yet -> stage 1 (no stage skipping)
+  bills: [{period: "2026-10", due_ago: 11}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B08
+  desc: 11 days overdue, stage 1 sent 8 days ago -> stage 2
+  bills: [{period: "2026-10", due_ago: 11}]
+  reminders: [{period: "2026-10", ago: 8, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 2}
+- id: B09
+  desc: 20 days overdue, stage 1 sent 9 days ago -> stage 2
+  bills: [{period: "2026-10", due_ago: 20}]
+  reminders: [{period: "2026-10", ago: 9, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 2}
+- id: B10
+  desc: 21 days overdue after stages 1 and 2 -> stage 3
+  bills: [{period: "2026-10", due_ago: 21}]
+  reminders: [{period: "2026-10", ago: 17, stage: 1}, {period: "2026-10", ago: 8, stage: 2}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 3}
+- id: B11
+  desc: 60 days overdue, upper bound of stage 3
+  bills: [{period: "2026-09", due_ago: 60}]
+  reminders: [{period: "2026-09", ago: 40, stage: 1}, {period: "2026-09", ago: 25, stage: 2}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 3}
+- id: B12
+  desc: 61 days overdue -> beyond automated stages, escalate
+  bills: [{period: "2026-09", due_ago: 61}]
+  expected: {state: OVERDUE, reminder_allowed: false, escalate: true, reason: BILL_BEYOND_AUTOMATED_STAGES}
+  tags: [conflict]
+- id: B13
+  desc: 25 days overdue, only stage 1 ever sent -> stage 2, not 3
+  bills: [{period: "2026-10", due_ago: 25}]
+  reminders: [{period: "2026-10", ago: 10, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 2}
+- id: B14
+  desc: Partial payment, overdue -> remind for the outstanding amount only
+  bills: [{period: "2026-10", due_ago: 5, status: PARTIALLY_PAID}]
+  payments: [{period: "2026-10", ago: 7, amount: 30000}]
+  expected: {state: PARTIALLY_PAID_OVERDUE, reminder_allowed: true, stage: 1, amount_due: "₹299.00"}
+- id: B15
+  desc: Open dispute -> no reminder, escalate
+  bills: [{period: "2026-10", due_ago: 25, dispute: OPEN}]
+  expected: {state: DISPUTED, reminder_allowed: false, escalate: true, reason: BILL_DISPUTED}
+  tags: [conflict]
+- id: B16
+  desc: Resolved dispute no longer blocks
+  bills: [{period: "2026-10", due_ago: 5, dispute: RESOLVED}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B17
+  desc: Missing due date
+  bills: [{period: "2026-10", due_ago: null, issue_ago: 19}]
+  expected: {state: DATA_CONFLICT, reminder_allowed: false, escalate: true, reason: BILL_DATA_MISSING}
+  tags: [conflict]
+- id: B18
+  desc: Status PAID but only half paid (C0010 variant)
+  bills: [{period: "2026-10", due_ago: 5, status: PAID}]
+  payments: [{period: "2026-10", ago: 8, amount: 30000}]
+  expected: {state: DATA_CONFLICT, reminder_allowed: false, escalate: true, reason: "BILL_DATA_CONFLICT:STATUS_PAYMENT_MISMATCH"}
+  tags: [conflict]
+- id: B19
+  desc: Status PAID with no payment at all
+  bills: [{period: "2026-10", due_ago: 5, status: PAID}]
+  expected: {state: DATA_CONFLICT, reminder_allowed: false, escalate: true, reason: "BILL_DATA_CONFLICT:STATUS_PAYMENT_MISMATCH"}
+  tags: [conflict]
+- id: B20
+  desc: Overpayment (possible refund case, out of scope)
+  bills: [{period: "2026-10", due_ago: 5}]
+  payments: [{period: "2026-10", ago: 8, amount: 40000}, {period: "2026-10", ago: 7, amount: 30000}]
+  expected: {state: DATA_CONFLICT, reminder_allowed: false, escalate: true, reason: "BILL_DATA_CONFLICT:OVERPAYMENT"}
+  tags: [conflict]
+- id: B21
+  desc: Status UNPAID but fully paid
+  bills: [{period: "2026-10", due_ago: 5, status: UNPAID}]
+  payments: [{period: "2026-10", ago: 8, amount: 59900}]
+  expected: {state: DATA_CONFLICT, reminder_allowed: false, escalate: true, reason: "BILL_DATA_CONFLICT:STATUS_PAYMENT_MISMATCH"}
+  tags: [conflict]
+- id: B22
+  desc: Reminder sent 3 days ago
+  bills: [{period: "2026-10", due_ago: 12}]
+  reminders: [{period: "2026-10", ago: 3, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: false, reason: BILL_REMINDER_TOO_RECENT}
+  tags: [duplicate]
+- id: B23
+  desc: Reminder sent 6 days ago (gap is 7)
+  bills: [{period: "2026-10", due_ago: 14}]
+  reminders: [{period: "2026-10", ago: 6, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: false, reason: BILL_REMINDER_TOO_RECENT}
+  tags: [duplicate]
+- id: B24
+  desc: Stage-named objective counts as a reminder too
+  bills: [{period: "2026-10", due_ago: 12}]
+  reminders: [{period: "2026-10", ago: 2, stage: 1, objective: BILLING_REMINDER_COURTEOUS}]
+  expected: {state: OVERDUE, reminder_allowed: false, reason: BILL_REMINDER_TOO_RECENT}
+  tags: [duplicate]
+- id: B25
+  desc: Reminder sent exactly 7 days ago is allowed again
+  bills: [{period: "2026-10", due_ago: 12}]
+  reminders: [{period: "2026-10", ago: 7, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 2}
+- id: B26
+  desc: Reminder about a different bill does not block this one
+  bills: [{period: "2026-10", due_ago: 12}]
+  reminders: [{period: "2026-09", ago: 2, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B27
+  desc: Reminder dated after as_of is ignored (leakage)
+  bills: [{period: "2026-10", due_ago: 12}]
+  reminders: [{period: "2026-10", ago: -2, stage: 1}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B28
+  desc: Payment dated after as_of is ignored (leakage)
+  bills: [{period: "2026-10", due_ago: 5}]
+  payments: [{period: "2026-10", ago: -1, amount: 59900}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 1}
+- id: B29
+  desc: Bill issued after as_of is ignored
+  bills: [{period: "2026-11", due_ago: -20, issue_ago: -2}]
+  expected: {state: NO_BILL, reminder_allowed: false}
+- id: B30
+  desc: No bills at all
+  bills: []
+  expected: {state: NO_BILL, reminder_allowed: false}
+- id: B31
+  desc: Older overdue bill wins over a newer bill not yet due (C0006 pattern)
+  bills: [{period: "2026-10", due_ago: 26}, {period: "2026-11", due_ago: -5}]
+  reminders: [{period: "2026-10", ago: 22, stage: 1}, {period: "2026-10", ago: 9, stage: 2}]
+  expected: {state: OVERDUE, reminder_allowed: true, stage: 3, bill_period: "2026-10"}
+- id: B32
+  desc: Bill older than the 3-month lookback is ignored
+  bills: [{period: "2026-06", due_ago: 150}]
+  expected: {state: NO_BILL, reminder_allowed: false}

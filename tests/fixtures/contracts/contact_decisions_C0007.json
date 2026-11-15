@@ -1,0 +1,20 @@
+{
+  "SERVICE": {
+    "allowed": false,
+    "category": "SERVICE",
+    "reasons": [
+      "CONTACT_EMAIL_OPT_OUT",
+      "CONTACT_CHANNEL_NONE",
+      "CONTACT_NO_SERVICE_CONSENT"
+    ]
+  },
+  "MARKETING": {
+    "allowed": false,
+    "category": "MARKETING",
+    "reasons": [
+      "CONTACT_EMAIL_OPT_OUT",
+      "CONTACT_CHANNEL_NONE",
+      "CONTACT_NO_MARKETING_CONSENT"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "eligible": [
+    {
+      "offer_id": "OFF-LOY-200",
+      "eligible": true,
+      "failed_checks": [],
+      "offer": {
+        "offer_id": "OFF-LOY-200",
+        "offer_type": "LOYALTY_REWARD",
+        "title": "Loyalty credit",
+        "value_display": "₹200 bill credit",
+        "terms_summary": "One-time ₹200 bill credit, applied on next bill.",
+        "valid_to_display": "31 Dec 2026"
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "offer_id": "OFF-LOY-OLD",
+      "eligible": false,
+      "failed_checks": [
+        "CAMPAIGN_NOT_ACTIVE",
+        "OFFER_EXPIRED"
+      ],
+      "offer": null
+    },
+    {
+      "offer_id": "OFF-PERK-10",
+      "eligible": false,
+      "failed_checks": [
+        "CAMPAIGN_NOT_ACTIVE"
+      ],
+      "offer": null
+    },
+    {
+      "offer_id": "OFF-RE-5GB",
+      "eligible": false,
+      "failed_checks": [
+        "OFFER_SEGMENT_INELIGIBLE"
+      ],
+      "offer": null
+    }
+  ],
+  "selected_offer_id": null
+}

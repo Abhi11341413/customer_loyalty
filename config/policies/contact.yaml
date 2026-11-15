@@ -1,3 +1,17 @@
-# Consent requirements, frequency caps.
-# Owner: M2. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Consent requirements, frequency caps (CLAUDE.md §6.5).
+# Owner: M2. Values are ASSUMPTIONS (illustrative, configurable) — NOT legal advice,
+# NOT official company policy.
+version: "1.0"
+marketing_requires: [email_marketing_consent]   # fields of ContactPreferences that must be true
+service_requires: [email_service_consent]
+global_blockers:            # each one, if it applies, refuses ANY email
+  - email_opt_out
+  - account_closed
+  - do_not_contact_until_active
+  - preferred_channel_none
+frequency_caps:
+  marketing_min_days_between: 14   # days since the last MARKETING email
+  total_max_per_30_days: 4         # all emails, any category
+duplicate_window_days:
+  same_objective: 7                # same objective (billing stages count as one objective)
+  same_offer: 30                   # same offer id (used by offer eligibility check #12)

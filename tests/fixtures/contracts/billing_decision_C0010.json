@@ -1,0 +1,13 @@
+{
+  "state": "DISPUTED",
+  "reminder_allowed": false,
+  "escalate": true,
+  "stage": null,
+  "bill_id": "B-C0010-2026-10",
+  "days_overdue": null,
+  "outstanding_minor": null,
+  "verified_facts": {},
+  "reason_codes": [
+    "BILL_DISPUTED"
+  ]
+}

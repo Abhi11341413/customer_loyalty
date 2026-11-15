@@ -1,3 +1,127 @@
-# Segment -> objective map, precedence.
-# Owner: M2. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Segment -> objective map, precedence (CLAUDE.md §7).
+# Owner: M2. Values are ASSUMPTIONS (illustrative, configurable) — NOT official company policy.
+#
+# Precedence (highest first) is fixed in app/policy/strategy.py:
+#   ESCALATE > NO_CONTACT_BY_POLICY > BILLING_REMINDER > engagement_rules (in order) > NO_CONTACT
+version: "1.0"
+
+# Segments that force ESCALATE (no draft).
+escalate_segments: [INSUFFICIENT_DATA]
+
+# Billing stage (from billing.yaml) -> objective. Template/tone must match billing.yaml
+# (checked by tests/unit/policy/test_config.py).
+billing_stage_objectives:
+  1: BILLING_REMINDER_COURTEOUS
+  2: BILLING_REMINDER_FOLLOWUP
+  3: BILLING_REMINDER_FIRM
+
+# Evaluated top to bottom; the first rule whose segments are ALL present wins.
+engagement_rules:
+  - when_all: [CONSISTENT, LOYALTY_CANDIDATE]
+    objective: LOYALTY_REWARD
+  - when_all: [DORMANT]
+    objective: WINBACK
+  - when_all: [DECLINING_ACTIVITY]
+    objective: REENGAGEMENT
+  - when_all: [CONSISTENT]
+    objective: APPRECIATION
+# Anything else (STANDARD, ...) -> NO_CONTACT
+
+objectives:
+  APPRECIATION:
+    category: MARKETING
+    template_id: appreciation_v1
+    template_version: "1.0"
+    tone: warm_grateful
+    allowed_offer_types: [APPRECIATION_PERK]
+    offer_required: false
+    disclaimers: [unsubscribe]
+    offer_disclaimers: [offer_terms]
+    cta_key: explore_account
+    summary: "Long-standing customer with regular activity and on-time payments"
+    skeleton: "greeting -> thank you -> (offer if provided) -> soft CTA -> sign-off"
+  LOYALTY_REWARD:
+    category: MARKETING
+    template_id: loyalty_reward_v1
+    template_version: "1.0"
+    tone: warm_celebratory
+    allowed_offer_types: [LOYALTY_REWARD]
+    offer_required: true
+    fallback_objective: APPRECIATION
+    disclaimers: [unsubscribe]
+    offer_disclaimers: [offer_terms]
+    cta_key: view_reward
+    summary: "Long-standing customer with a perfect recent payment record"
+    skeleton: "greeting -> thank you for loyalty -> reward details -> one CTA -> sign-off"
+  REENGAGEMENT:
+    category: MARKETING
+    template_id: reengagement_declining_v1
+    template_version: "1.0"
+    tone: helpful_low_pressure
+    allowed_offer_types: [REENGAGEMENT]
+    offer_required: false
+    disclaimers: [unsubscribe]
+    offer_disclaimers: [offer_terms]
+    cta_key: see_plan_benefits
+    summary: "Customer who is still active but using the service less than before"
+    skeleton: "greeting -> friendly check-in -> plan benefits -> (offer if provided) -> CTA -> sign-off"
+  WINBACK:
+    category: MARKETING
+    template_id: winback_dormant_v1
+    template_version: "1.0"
+    tone: friendly_no_guilt
+    allowed_offer_types: [REENGAGEMENT]
+    offer_required: false
+    disclaimers: [unsubscribe]
+    offer_disclaimers: [offer_terms]
+    cta_key: come_back
+    summary: "Customer with an active plan who has not used the service recently"
+    skeleton: "greeting -> we'd love to have you back -> (offer if provided) -> CTA -> sign-off"
+  BILLING_REMINDER_COURTEOUS:
+    category: SERVICE
+    template_id: billing_reminder_stage1
+    template_version: "1.0"
+    tone: courteous
+    allowed_offer_types: []
+    disclaimers: [already_paid, support_dispute_path]
+    cta_key: pay_or_view
+    summary: "Bill for {bill_period} overdue by {days_overdue} days"
+    skeleton: "greeting -> reason for writing -> bill facts -> CTA -> support/dispute path -> sign-off"
+  BILLING_REMINDER_FOLLOWUP:
+    category: SERVICE
+    template_id: billing_reminder_stage2
+    template_version: "1.0"
+    tone: polite_follow_up
+    allowed_offer_types: []
+    disclaimers: [already_paid, support_dispute_path]
+    cta_key: pay_or_view
+    summary: "Bill for {bill_period} overdue by {days_overdue} days; an earlier reminder was sent"
+    skeleton: "greeting -> follow-up on earlier reminder -> bill facts -> CTA -> support/dispute path -> sign-off"
+  BILLING_REMINDER_FIRM:
+    category: SERVICE
+    template_id: billing_reminder_stage3
+    template_version: "1.0"
+    tone: firm_respectful
+    allowed_offer_types: []
+    disclaimers: [already_paid, support_dispute_path]
+    cta_key: pay_or_contact
+    summary: "Bill for {bill_period} overdue by {days_overdue} days; earlier reminders were sent"
+    skeleton: "greeting -> clear statement of overdue bill -> bill facts -> ask to pay or contact -> offer help -> sign-off"
+
+# CTA key -> slot name + approved text. The text is a verified slot value, not LLM-written.
+ctas:
+  explore_account: {slot: cta, text: "Explore your account"}
+  view_reward: {slot: cta, text: "View your reward"}
+  see_plan_benefits: {slot: cta, text: "See what's included in your plan"}
+  come_back: {slot: cta, text: "Pick up where you left off"}
+  pay_or_view: {slot: pay_cta, text: "View and pay your bill"}
+  pay_or_contact: {slot: pay_cta, text: "Pay your bill or contact us"}
+
+# Passed to the LLM as things it must never mention unless they appear in INPUT.
+forbidden:
+  - threats
+  - legal action
+  - late fees not provided
+  - credit score
+  - service suspension unless provided
+  - internal segment names or scores
