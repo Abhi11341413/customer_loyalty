@@ -1,0 +1,16 @@
+{
+  "objective": "ESCALATE",
+  "category": null,
+  "template_id": null,
+  "template_version": null,
+  "tone": null,
+  "allowed_offer": null,
+  "required_disclaimer_keys": [],
+  "cta_key": null,
+  "reminder_stage": null,
+  "suppressed": [],
+  "rationale_codes": [
+    "STRATEGY_BILLING_ESCALATION",
+    "BILL_DISPUTED"
+  ]
+}

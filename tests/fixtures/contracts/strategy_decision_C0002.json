@@ -1,0 +1,25 @@
+{
+  "objective": "LOYALTY_REWARD",
+  "category": "MARKETING",
+  "template_id": "loyalty_reward_v1",
+  "template_version": "1.0",
+  "tone": "warm_celebratory",
+  "allowed_offer": {
+    "offer_id": "OFF-LOY-200",
+    "offer_type": "LOYALTY_REWARD",
+    "title": "Loyalty credit",
+    "value_display": "₹200 bill credit",
+    "terms_summary": "One-time ₹200 bill credit, applied on next bill.",
+    "valid_to_display": "31 Dec 2026"
+  },
+  "required_disclaimer_keys": [
+    "unsubscribe",
+    "offer_terms"
+  ],
+  "cta_key": "view_reward",
+  "reminder_stage": null,
+  "suppressed": [],
+  "rationale_codes": [
+    "SEGMENTS:CONSISTENT,LOYALTY_CANDIDATE"
+  ]
+}

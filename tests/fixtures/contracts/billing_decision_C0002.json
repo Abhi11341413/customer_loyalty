@@ -1,0 +1,11 @@
+{
+  "state": "PAID",
+  "reminder_allowed": false,
+  "escalate": false,
+  "stage": null,
+  "bill_id": "B-C0002-2026-10",
+  "days_overdue": null,
+  "outstanding_minor": null,
+  "verified_facts": {},
+  "reason_codes": []
+}

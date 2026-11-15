@@ -1,0 +1,27 @@
+{
+  "objective": "NO_CONTACT_BY_POLICY",
+  "category": "MARKETING",
+  "template_id": null,
+  "template_version": null,
+  "tone": null,
+  "allowed_offer": null,
+  "required_disclaimer_keys": [],
+  "cta_key": null,
+  "reminder_stage": null,
+  "suppressed": [
+    {
+      "objective": "LOYALTY_REWARD",
+      "reason_codes": [
+        "CONTACT_EMAIL_OPT_OUT",
+        "CONTACT_CHANNEL_NONE",
+        "CONTACT_NO_MARKETING_CONSENT"
+      ]
+    }
+  ],
+  "rationale_codes": [
+    "STRATEGY_CONTACT_REFUSED",
+    "CONTACT_EMAIL_OPT_OUT",
+    "CONTACT_CHANNEL_NONE",
+    "CONTACT_NO_MARKETING_CONSENT"
+  ]
+}
