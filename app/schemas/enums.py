@@ -1,30 +1,36 @@
-"""Enums: segments, objectives, draft states, severities, reason codes.
+"""Enums shared across modules: segments, bill states, confidence bands, account status.
 
-Owner: SHARED — all owners must approve changes (CLAUDE.md §12.1).
-
-This first version adds the enums the policy engine (M2) needs. M1/M3/M4 add
-their own enums (draft states, severities, ...) in follow-up PRs.
+Owner: SHARED — changes need approval from all affected owners.
+Other members add their enums (objectives, draft states, severities, ...) here in small PRs.
 """
 
 from enum import StrEnum
 
 
-class Segment(StrEnum):
-    """Classification labels (§5.1). Engagement axis + loyalty qualifier + billing flag."""
+class EngagementSegment(StrEnum):
+    """Engagement axis — exactly one per customer, evaluated in precedence order."""
 
-    # Engagement axis (exactly one)
-    CONSISTENT = "CONSISTENT"
-    DECLINING_ACTIVITY = "DECLINING_ACTIVITY"
-    DORMANT = "DORMANT"
-    STANDARD = "STANDARD"
     INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
-    # Qualifier / flag (optional)
-    LOYALTY_CANDIDATE = "LOYALTY_CANDIDATE"
-    PAYMENT_REMINDER = "PAYMENT_REMINDER"
+    DORMANT = "DORMANT"
+    DECLINING_ACTIVITY = "DECLINING_ACTIVITY"
+    CONSISTENT = "CONSISTENT"
+    STANDARD = "STANDARD"
+
+
+class Segment(StrEnum):
+    """Every label that can appear in ClassificationResult.segments."""
+
+    INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
+    DORMANT = "DORMANT"
+    DECLINING_ACTIVITY = "DECLINING_ACTIVITY"
+    CONSISTENT = "CONSISTENT"
+    STANDARD = "STANDARD"
+    LOYALTY_CANDIDATE = "LOYALTY_CANDIDATE"  # qualifier, only with CONSISTENT
+    PAYMENT_REMINDER = "PAYMENT_REMINDER"  # billing flag, independent of engagement
 
 
 class BillState(StrEnum):
-    """Derived bill state (§6.2)."""
+    """Derived state of the customer's current bill."""
 
     PAID = "PAID"
     NOT_YET_DUE = "NOT_YET_DUE"
@@ -33,6 +39,27 @@ class BillState(StrEnum):
     DISPUTED = "DISPUTED"
     DATA_CONFLICT = "DATA_CONFLICT"
     NO_BILL = "NO_BILL"
+
+
+class BillConflictType(StrEnum):
+    MISSING_FIELD = "MISSING_FIELD"
+    STATUS_PAYMENT_MISMATCH = "STATUS_PAYMENT_MISMATCH"
+    OVERPAYMENT = "OVERPAYMENT"
+
+
+class ConfidenceBand(StrEnum):
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
+class AccountStatus(StrEnum):
+    ACTIVE = "ACTIVE"
+    SUSPENDED = "SUSPENDED"
+    CLOSED = "CLOSED"
+
+
+# --------------------------------------------------------------------------- policy (M2)
 
 
 class MessageCategory(StrEnum):
@@ -82,9 +109,3 @@ class OfferValueType(StrEnum):
     FLAT_CREDIT_MINOR = "FLAT_CREDIT_MINOR"
     BONUS_DATA_GB = "BONUS_DATA_GB"
     POINTS = "POINTS"
-
-
-class AccountStatus(StrEnum):
-    ACTIVE = "ACTIVE"
-    SUSPENDED = "SUSPENDED"
-    CLOSED = "CLOSED"
