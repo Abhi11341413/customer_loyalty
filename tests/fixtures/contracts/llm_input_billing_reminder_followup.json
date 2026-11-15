@@ -1,0 +1,29 @@
+{
+  "first_name": "Kiran",
+  "objective": "BILLING_REMINDER_FOLLOWUP",
+  "segment_summary": "Demo case for BILLING_REMINDER_FOLLOWUP",
+  "tone": {
+    "name": "polite_clear",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Kiran",
+    "cta": "View and pay your bill",
+    "amount_due": "₹499.00",
+    "due_date": "3 Nov 2026",
+    "bill_period": "October 2026",
+    "support_path": "reply to this email or visit the Help section of your account."
+  },
+  "offer": null,
+  "required_disclaimers": [
+    "already_paid",
+    "support_dispute_path"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}

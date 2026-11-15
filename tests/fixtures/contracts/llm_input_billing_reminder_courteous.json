@@ -1,0 +1,29 @@
+{
+  "first_name": "Ravi",
+  "objective": "BILLING_REMINDER_COURTEOUS",
+  "segment_summary": "Demo case for BILLING_REMINDER_COURTEOUS",
+  "tone": {
+    "name": "courteous",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Ravi",
+    "cta": "View and pay your bill",
+    "amount_due": "₹599.00",
+    "due_date": "10 Nov 2026",
+    "bill_period": "October 2026",
+    "support_path": "reply to this email or visit the Help section of your account."
+  },
+  "offer": null,
+  "required_disclaimers": [
+    "already_paid",
+    "support_dispute_path"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}

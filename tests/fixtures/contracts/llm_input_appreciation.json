@@ -1,0 +1,25 @@
+{
+  "first_name": "Mei",
+  "objective": "APPRECIATION",
+  "segment_summary": "Demo case for APPRECIATION",
+  "tone": {
+    "name": "warm_grateful",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Mei",
+    "cta": "Explore your account",
+    "plan_name": "Postpaid 599"
+  },
+  "offer": null,
+  "required_disclaimers": [
+    "unsubscribe"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}

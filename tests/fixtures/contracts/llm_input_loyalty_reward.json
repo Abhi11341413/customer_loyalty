@@ -1,0 +1,33 @@
+{
+  "first_name": "Asha",
+  "objective": "LOYALTY_REWARD",
+  "segment_summary": "Demo case for LOYALTY_REWARD",
+  "tone": {
+    "name": "warm_celebratory",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Asha",
+    "cta": "View your reward in your account",
+    "plan_name": "Postpaid 499"
+  },
+  "offer": {
+    "offer_id": "OFF-LOY-200",
+    "offer_type": "LOYALTY_REWARD",
+    "title": "Loyalty credit",
+    "value_display": "₹200.00",
+    "terms_summary": "One-time ₹200 bill credit, applied on next bill.",
+    "valid_to_display": "31 Dec 2026"
+  },
+  "required_disclaimers": [
+    "offer_terms",
+    "unsubscribe"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}

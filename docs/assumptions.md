@@ -22,3 +22,16 @@ All project assumptions, kept in sync. Thresholds are illustrative defaults, not
 | S-09 | Confidence is a transparent rule score (completeness × margin), not a probability. Bands: HIGH ≥ 0.75, MEDIUM ≥ 0.45. | `segments.yaml` |
 
 > TODO (M2): add billing, offer and contact assumptions.
+
+## Generation & guardrails (M3)
+
+| # | Assumption | Where configured |
+|---|---|---|
+| G-01 | Template wording, tone rules, CTA texts and disclaimer texts are illustrative content, not approved company/legal copy. | `config/templates/`, `config/policies/{tone,disclaimers}.yaml` |
+| G-02 | Disclaimers are appended by code after a `--` separator, verbatim, for the keys the strategy requires; the LLM only acknowledges keys. | `disclaimers.yaml`, `app/generation/renderer.py` |
+| G-03 | Body word ranges per template (excluding disclaimers) are advisory (WARN). | `word_range` in each template |
+| G-04 | Any relative-time phrase ("within 24 hours", "by tomorrow", "this month") counts as a deadline and must come from the input; standalone "today" does not. This over-blocks some benign phrasing (see guardrail report). | `app/guardrails/extractors.py` |
+| G-05 | Numbers with units (%, GB, points, days, hours, years...) must match a verified value; a bare-number slot (e.g. `days_overdue` = "26") grounds that number with any unit. | `app/guardrails/checks/grounding.py` |
+| G-06 | Blocked, pressure, casual, contradiction, offer-keyword and internal-term lexicons are starter lists to extend as a team. | `config/policies/blocked_language.yaml` |
+| G-07 | A helpline number or email is allowed in a message only if it is part of the verified `support_path` slot. | `PII_LEAKAGE` check |
+| G-08 | Semantic (LLM-judge) checks are not implemented (OPEN-6 default); all checks are deterministic. | `app/guardrails/registry.py` |

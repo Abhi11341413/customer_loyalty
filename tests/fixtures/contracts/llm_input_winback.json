@@ -1,0 +1,32 @@
+{
+  "first_name": "Lena",
+  "objective": "WINBACK",
+  "segment_summary": "Demo case for WINBACK",
+  "tone": {
+    "name": "friendly_no_guilt",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Lena",
+    "cta": "Visit your account to get started again"
+  },
+  "offer": {
+    "offer_id": "OFF-RE-5GB",
+    "offer_type": "REENGAGEMENT",
+    "title": "5 GB bonus data",
+    "value_display": "5 GB",
+    "terms_summary": "5 GB bonus data valid for 30 days after activation.",
+    "valid_to_display": "31 Dec 2026"
+  },
+  "required_disclaimers": [
+    "offer_terms",
+    "unsubscribe"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}

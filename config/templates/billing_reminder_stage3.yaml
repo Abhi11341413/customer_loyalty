@@ -1,3 +1,19 @@
-# Approved template: billing reminder stage 3 (firm).
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: billing reminder stage 3 (firm, respectful, no threats, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+# {{days_overdue}} is a bare integer string from BillingDecision (e.g. "26").
+template_id: billing_reminder_stage3
+version: "1.0"
+objective: BILLING_REMINDER_FIRM
+word_range: [30, 130]
+variants:
+  - when_offer: false
+    subject: "Your {{bill_period}} bill is now overdue"
+    body: |-
+      Hi {{first_name}},
+
+      Your bill for {{bill_period}} of {{amount_due}} was due on {{due_date}} and is now {{days_overdue}} days overdue. We have sent earlier reminders and have not yet received payment.
+
+      Please pay the outstanding amount or contact us so we can discuss it: {{cta}}.
+
+      Thank you,
+      Customer Care Team

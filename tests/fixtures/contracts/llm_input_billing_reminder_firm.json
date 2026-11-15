@@ -1,0 +1,31 @@
+{
+  "first_name": "Omar",
+  "objective": "BILLING_REMINDER_FIRM",
+  "segment_summary": "Demo case for BILLING_REMINDER_FIRM",
+  "tone": {
+    "name": "firm_respectful",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Omar",
+    "cta": "View and pay your bill, or contact us",
+    "amount_due": "₹749.00",
+    "due_date": "20 Oct 2026",
+    "bill_period": "September 2026",
+    "days_overdue": "26",
+    "support_path": "reply to this email or visit the Help section of your account."
+  },
+  "offer": null,
+  "required_disclaimers": [
+    "already_paid",
+    "support_dispute_path",
+    "need_help"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}

@@ -1,3 +1,12 @@
-# Exact disclaimer texts.
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Exact disclaimer texts, appended by code (never written by the LLM, §8.5).
+# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable). Not legal advice.
+#
+# Texts may reference verified slots ({{support_path}}, {{offer_terms}}, ...). The
+# SlotRenderer fills them from LLMInput; a missing slot becomes an UNKNOWN_SLOT BLOCK.
+version: "1.0"
+disclaimers:
+  already_paid: "If you have already paid this bill, please ignore this email."
+  support_dispute_path: "If you have questions about this bill or believe it is incorrect, {{support_path}}"
+  need_help: "If you are having difficulty paying, please contact us and we will listen and help where we can."
+  offer_terms: "Offer terms: {{offer_terms}} Offer valid until {{offer_valid_to}}."
+  unsubscribe: "You are receiving this email because you opted in to updates from us. You can unsubscribe from marketing emails in your account settings."

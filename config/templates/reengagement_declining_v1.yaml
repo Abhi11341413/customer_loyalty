@@ -1,3 +1,64 @@
-# Approved template: re-engagement (declining).
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: re-engagement (DECLINING_ACTIVITY, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+# Never mentions the usage drop or any activity numbers (tone helpful_low_pressure).
+template_id: reengagement_declining_v1
+version: "1.0"
+objective: REENGAGEMENT
+word_range: [40, 130]
+variants:
+  - when_offer: true
+    subject: "Getting the most from your {{plan_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      We wanted to check in and make sure your {{plan_name}} is working well for you. Your plan comes with benefits that are ready whenever you need them.
+
+      To help you make the most of it, we would like to offer you {{offer_title}}: {{offer_value}}, available until {{offer_valid_to}}.
+
+      {{cta}}
+
+      If there is anything we can help with, simply reply to this email.
+
+      Best regards,
+      Customer Care Team
+  - when_offer: true
+    subject: "Getting the most from your plan, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      We wanted to check in and make sure your plan is working well for you. It comes with benefits that are ready whenever you need them.
+
+      To help you make the most of it, we would like to offer you {{offer_title}}: {{offer_value}}, available until {{offer_valid_to}}.
+
+      {{cta}}
+
+      If there is anything we can help with, simply reply to this email.
+
+      Best regards,
+      Customer Care Team
+  - when_offer: false
+    subject: "Getting the most from your {{plan_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      We wanted to check in and make sure your {{plan_name}} is working well for you. Your plan comes with benefits that are ready whenever you need them.
+
+      {{cta}}
+
+      If there is anything we can help with, simply reply to this email.
+
+      Best regards,
+      Customer Care Team
+  - when_offer: false
+    subject: "Getting the most from your plan, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      We wanted to check in and make sure your plan is working well for you. It comes with benefits that are ready whenever you need them.
+
+      {{cta}}
+
+      If there is anything we can help with, simply reply to this email.
+
+      Best regards,
+      Customer Care Team

@@ -1,3 +1,36 @@
-# Approved template: win-back (dormant).
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: win-back (DORMANT, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+# No guilt, no reference to "recent usage" (there is none for dormant customers).
+template_id: winback_dormant_v1
+version: "1.0"
+objective: WINBACK
+word_range: [35, 120]
+variants:
+  - when_offer: true
+    subject: "We would love to have you back, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      We wanted to say hello. Your account is ready whenever you are, and we would love to have you back.
+
+      To welcome you back, we would like to offer you {{offer_title}}: {{offer_value}}, available until {{offer_valid_to}}.
+
+      {{cta}}
+
+      If there is anything we could do better, we would be glad to hear from you.
+
+      Warm regards,
+      Customer Care Team
+  - when_offer: false
+    subject: "We would love to have you back, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      We wanted to say hello. Your account is ready whenever you are, and we would love to have you back.
+
+      {{cta}}
+
+      If there is anything we could do better, we would be glad to hear from you.
+
+      Warm regards,
+      Customer Care Team

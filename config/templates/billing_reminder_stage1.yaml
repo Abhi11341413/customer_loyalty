@@ -1,3 +1,17 @@
-# Approved template: billing reminder stage 1 (courteous).
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: billing reminder stage 1 (courteous, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+# Support/dispute path and "already paid" text are appended as disclaimers by code.
+template_id: billing_reminder_stage1
+version: "1.0"
+objective: BILLING_REMINDER_COURTEOUS
+word_range: [25, 120]
+variants:
+  - when_offer: false
+    subject: "A friendly reminder about your {{bill_period}} bill"
+    body: |-
+      Hi {{first_name}},
+
+      This is a quick reminder that your bill for {{bill_period}} of {{amount_due}} was due on {{due_date}}. If it slipped your mind, you can settle it here: {{cta}}.
+
+      Thank you,
+      Customer Care Team

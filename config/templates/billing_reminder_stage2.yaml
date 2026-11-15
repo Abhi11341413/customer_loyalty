@@ -1,3 +1,20 @@
-# Approved template: billing reminder stage 2 (follow-up).
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: billing reminder stage 2 (polite follow-up, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+template_id: billing_reminder_stage2
+version: "1.0"
+objective: BILLING_REMINDER_FOLLOWUP
+word_range: [30, 125]
+variants:
+  - when_offer: false
+    subject: "Reminder: your {{bill_period}} bill is still open"
+    body: |-
+      Hi {{first_name}},
+
+      We are writing again about your bill for {{bill_period}}. The amount of {{amount_due}} was due on {{due_date}} and is still open.
+
+      Please arrange payment when you can: {{cta}}.
+
+      If something is stopping you from paying, please get in touch and we will do our best to help.
+
+      Thank you,
+      Customer Care Team

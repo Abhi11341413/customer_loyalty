@@ -1,0 +1,32 @@
+# Objective-specific guidance appended to the user prompt (§8.6). Versioned with the prompt.
+# Owner: M3. Word counts are ASSUMPTIONS and mirror template word_range.
+version: "v1"
+guidance:
+  APPRECIATION: >-
+    Thank {{first_name}} for being a valued customer. Mention their {{plan_name}} only if
+    it is in allowed_slots. Present an offer only if INPUT.offer is present. 60-120 words.
+    Soft call to action using {{cta}}.
+  LOYALTY_REWARD: >-
+    Thank the customer for their loyalty and present the reward using {{offer_title}},
+    {{offer_value}} and {{offer_valid_to}}. Do not exaggerate ('exclusive', 'only for you')
+    unless it is in the offer title. Exactly one call to action using {{cta}}. 70-140 words.
+  REENGAGEMENT: >-
+    Friendly check-in. Do NOT mention that usage dropped, activity levels or any numbers.
+    Highlight that their {{plan_name}} (if in allowed_slots) includes benefits they can use;
+    present the offer if provided. Low pressure. Call to action using {{cta}}. 60-120 words.
+  WINBACK: >-
+    Warm 'we would love to have you back' message. Do not guilt the customer or imply they
+    did something wrong. Do not mention how long they have been inactive. Present the
+    re-engagement offer if provided. Call to action using {{cta}}. 50-110 words.
+  BILLING_REMINDER_COURTEOUS: >-
+    Assume an oversight. State that the bill for {{bill_period}} of {{amount_due}} was due
+    on {{due_date}}. Provide {{cta}}. No urgency words. At most 120 words.
+  BILLING_REMINDER_FOLLOWUP: >-
+    Polite and clear follow-up. State that the bill for {{bill_period}} of {{amount_due}},
+    due on {{due_date}}, is still open. Provide {{cta}} and offer help if something is
+    stopping payment. No urgency words, no blame. At most 120 words.
+  BILLING_REMINDER_FIRM: >-
+    Clear and firm but respectful. State the outstanding {{amount_due}} for {{bill_period}},
+    due {{due_date}}, and that it is now {{days_overdue}} days overdue. Ask for payment or
+    contact using {{cta}}. Do NOT mention fees, suspension, legal action, credit impact, or
+    collections. Offer help if they are facing difficulty. At most 130 words.

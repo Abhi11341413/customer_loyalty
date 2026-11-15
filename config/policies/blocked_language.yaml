@@ -1,3 +1,151 @@
-# Blocked + pressure terms.
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Blocked, pressure, casual and contradiction lexicons used by the guardrails (§9.2, §9.4).
+# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable) — extend as a team.
+# Matching is case-insensitive on word boundaries.
+version: "1.0"
+
+# BLOCKED_LANGUAGE (mandatory -> BLOCK in every objective)
+always_blocked:
+  threats:
+    - "legal action"
+    - "lawsuit"
+    - "sue you"
+    - "take you to court"
+    - "police"
+    - "we will disconnect"
+    - "disconnect your service"
+    - "suspend your service"
+    - "service suspension"
+    - "cut off your service"
+    - "collections agency"
+    - "debt collector"
+    - "recovery agent"
+  credit_impact:
+    - "credit score"
+    - "credit rating"
+    - "credit bureau"
+    - "cibil"
+    - "blacklist"
+    - "blacklisted"
+  escalation:
+    - "final warning"
+    - "last warning"
+    - "final notice"
+  fees_not_provided:
+    - "late fee"
+    - "late fees"
+    - "penalty"
+    - "penalties"
+    - "interest charge"
+  shaming:
+    - "shame"
+    - "shameful"
+    - "irresponsible"
+    - "embarrassing"
+    - "negligent"
+  # Revealing how the customer was profiled (system prompt rule 3).
+  classification_disclosure:
+    - "not been using"
+    - "haven't been using"
+    - "stopped using"
+    - "usage dropped"
+    - "usage has dropped"
+    - "activity dropped"
+    - "activity has dropped"
+    - "less active"
+    - "our records show your activity"
+    - "your segment"
+  abusive:
+    - "stupid"
+    - "idiot"
+    - "useless"
+    - "damn"
+    - "crap"
+
+# TONE_KEYWORDS (advisory -> WARN)
+pressure_terms_warn_in:
+  - BILLING_REMINDER_COURTEOUS
+  - BILLING_REMINDER_FOLLOWUP
+  - APPRECIATION
+  - LOYALTY_REWARD
+  - REENGAGEMENT
+  - WINBACK
+pressure_terms:
+  - "urgent"
+  - "urgently"
+  - "immediately"
+  - "act now"
+  - "last chance"
+  - "failure to pay"
+  - "as soon as possible"
+  - "asap"
+  - "hurry"
+  - "don't miss out"
+  - "limited time"
+  - "only for you"
+  - "exclusive"
+
+casual_terms_warn_in:
+  - BILLING_REMINDER_FIRM
+casual_terms:
+  - "hey"
+  - "no worries"
+  - "no rush"
+  - "whenever you like"
+  - "cheers"
+  - "lol"
+
+# FACT_CONTRADICTION (mandatory -> BLOCK)
+contradiction:
+  # Must not appear in a billing reminder (the bill is unpaid).
+  billing_reminder_forbids:
+    - "thank you for your payment"
+    - "thanks for your payment"
+    - "thank you for paying"
+    - "payment has been received"
+    - "received your payment"
+    - "account is up to date"
+    - "paid in full"
+  # Must not appear in a marketing message (there is no billing fact to support it).
+  non_billing_forbids:
+    - "overdue"
+    - "past due"
+    - "unpaid"
+    - "outstanding balance"
+    - "outstanding amount"
+    - "amount due"
+    - "payment reminder"
+    - "late payment"
+
+# OFFER_ID_VALID: words that imply an offer. Mentioning one when no offer is allowed -> BLOCK.
+offer_keywords:
+  - "discount"
+  - "% off"
+  - "percent off"
+  - "free"
+  - "cashback"
+  - "cash back"
+  - "credit"
+  - "bonus"
+  - "reward"
+  - "voucher"
+  - "coupon"
+  - "promo code"
+  - "gift"
+# Phrases that contain an offer keyword but are not offers (removed before matching).
+offer_keyword_exceptions:
+  - "feel free"
+  - "free to"
+  - "hassle-free"
+  - "worry-free"
+
+# PII_LEAKAGE: internal vocabulary that must never reach a customer (case-sensitive).
+internal_code_prefixes: ["ENG_", "LOY_", "PAY_", "BILL_", "CONTACT_", "OFFER_", "STRAT_"]
+internal_terms:
+  - "INSUFFICIENT_DATA"
+  - "DECLINING_ACTIVITY"
+  - "LOYALTY_CANDIDATE"
+  - "PAYMENT_REMINDER"
+  - "DORMANT"
+  - "CONSISTENT"
+  - "NO_CONTACT"
+  - "ESCALATE"

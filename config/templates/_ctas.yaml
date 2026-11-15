@@ -1,0 +1,13 @@
+# Call-to-action wording, keyed by StrategyDecision.cta_key.
+# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
+#
+# M2's LLMInput builder puts the text into allowed_slots["cta"] via
+# app.generation.templates.cta_text(cta_key). Files starting with "_" are not templates.
+version: "1.0"
+ctas:
+  explore_account: "Explore your account"
+  view_reward: "View your reward in your account"
+  view_plan: "See what is included in your plan"
+  reactivate: "Visit your account to get started again"
+  pay_bill: "View and pay your bill"
+  pay_or_contact: "View and pay your bill, or contact us"

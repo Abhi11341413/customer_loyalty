@@ -1,1 +1,30 @@
-{# Owner: M3 — user prompt v1, Jinja2 StrictUndefined. TODO #}
+Write one customer email for the objective below.
+
+INPUT:
+{{ input_json }}
+
+Objective guidance:
+{{ guidance }}
+
+Structure to follow: {{ skeleton }}
+
+Allowed slots (write exactly as shown, never their values): {{ slot_list }}
+{% if offer_id %}
+The only offer you may present is offer_id "{{ offer_id }}". Set offer_id to exactly that value.
+{% else %}
+There is NO offer for this email. Do not mention any discount, reward, bonus, credit, gift or free item. Set offer_id to null.
+{% endif %}
+Required disclaimer keys (list them in disclaimer_keys, do not write the text): {{ disclaimer_keys }}
+Never mention: {{ forbidden }}
+
+Return JSON with exactly these keys:
+{"subject": str (5-90 chars), "body": str (40-1500 chars, may contain slots), "customer_segment": str, "communication_objective": "{{ objective }}", "facts_used": [slot names you used], "offer_id": {% if offer_id %}"{{ offer_id }}"{% else %}null{% endif %}, "disclaimer_keys": [keys]}
+Sign off as "Customer Care Team".
+{% if feedback %}
+A previous draft was rejected by automated checks. Fix ALL of these problems:
+{% for item in feedback %}- {{ item }}
+{% endfor %}{% endif %}
+{% if repair_error %}
+Your previous reply was not valid. Error: {{ repair_error }}
+Reply again with ONLY the corrected JSON object.
+{% endif %}

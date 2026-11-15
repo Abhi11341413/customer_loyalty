@@ -1,3 +1,50 @@
-# Approved template: appreciation.
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: appreciation (CONSISTENT customers, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+#
+# Variants are tried in order; the first whose `when_offer` matches and whose slots are
+# all available is used (TemplateOnly fallback, §8.7). word_range applies to the body
+# without the appended disclaimers (LENGTH_LIMITS).
+template_id: appreciation_v1
+version: "1.0"
+objective: APPRECIATION
+word_range: [40, 130]
+variants:
+  - when_offer: true
+    subject: "Thank you for being with us, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      Thank you for being a valued customer. We truly appreciate the trust you place in us, and we are glad to have you with us.
+
+      As a small thank-you, we would like to offer you {{offer_title}}: {{offer_value}}, available until {{offer_valid_to}}.
+
+      {{cta}}
+
+      Warm regards,
+      Customer Care Team
+  - when_offer: false
+    subject: "Thank you for being with us, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      Thank you for being a valued customer. We truly appreciate the trust you place in us, and we hope your {{plan_name}} continues to serve you well.
+
+      If there is anything we can do to make your experience even better, we would be glad to hear from you.
+
+      {{cta}}
+
+      Warm regards,
+      Customer Care Team
+  - when_offer: false
+    subject: "Thank you for being with us, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      Thank you for being a valued customer. We truly appreciate the trust you place in us, and we are glad to have you with us.
+
+      If there is anything we can do to make your experience even better, we would be glad to hear from you.
+
+      {{cta}}
+
+      Warm regards,
+      Customer Care Team

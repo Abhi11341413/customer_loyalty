@@ -1,3 +1,22 @@
-# Approved template: loyalty reward.
-# Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Approved template: loyalty reward (CONSISTENT + LOYALTY_CANDIDATE + eligible offer, §7.1).
+# Owner: M3. Wording is ASSUMPTION content (illustrative, configurable).
+template_id: loyalty_reward_v1
+version: "1.0"
+objective: LOYALTY_REWARD
+word_range: [40, 150]
+variants:
+  - when_offer: true
+    subject: "A thank-you for your loyalty, {{first_name}}"
+    body: |-
+      Hi {{first_name}},
+
+      Thank you for your loyalty. Customers like you are the reason we keep improving, and we would like to say thanks in a practical way.
+
+      We are pleased to offer you {{offer_title}}: {{offer_value}}. It is available until {{offer_valid_to}}.
+
+      {{cta}}
+
+      Thank you for staying with us.
+
+      Warm regards,
+      Customer Care Team

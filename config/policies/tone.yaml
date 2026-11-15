@@ -1,3 +1,43 @@
-# Tone rules per objective.
+# Tone rules, keyed by the tone name StrategySelector picks (strategy.yaml -> objectives.*.tone).
 # Owner: M3. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+#
+# M2's LLMInput builder copies `rules` into LLMInput.tone (ToneSpec). The rules are
+# instructions to the LLM; deterministic enforcement lives in blocked_language.yaml
+# (TONE_KEYWORDS, BLOCKED_LANGUAGE) and template word ranges (LENGTH_LIMITS).
+version: "1.0"
+tones:
+  warm_grateful:
+    rules:
+      - "sincere thanks, no hype"
+      - "do not mention any offer unless INPUT.offer is present"
+      - "soft call to action only"
+  warm_celebratory:
+    rules:
+      - "celebrate the customer's loyalty warmly but without pressure"
+      - "do not call the offer 'exclusive' or 'only for you' unless it is in the offer title"
+      - "exactly one call to action"
+  helpful_low_pressure:
+    rules:
+      - "friendly check-in, focus on what the plan already includes"
+      - "never mention that usage dropped, activity levels or any numbers about the customer"
+      - "no urgency, no scarcity"
+  friendly_no_guilt:
+    rules:
+      - "warm 'we would love to have you back' message"
+      - "never guilt the customer or imply they did something wrong"
+      - "no urgency, no scarcity"
+  courteous:
+    rules:
+      - "assume an honest oversight"
+      - "no blame"
+      - "no urgency words"
+  polite_clear:
+    rules:
+      - "polite and clear that the bill is still open"
+      - "no blame, no urgency words"
+      - "offer help if something is stopping payment"
+  firm_respectful:
+    rules:
+      - "clear, factual and firm, but respectful"
+      - "no threats; never mention fees, suspension, legal action, credit impact or collections"
+      - "offer help if the customer is facing difficulty"

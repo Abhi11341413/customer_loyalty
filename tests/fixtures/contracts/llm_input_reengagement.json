@@ -1,0 +1,33 @@
+{
+  "first_name": "Arjun",
+  "objective": "REENGAGEMENT",
+  "segment_summary": "Demo case for REENGAGEMENT",
+  "tone": {
+    "name": "helpful_low_pressure",
+    "rules": [
+      "be respectful"
+    ]
+  },
+  "allowed_slots": {
+    "first_name": "Arjun",
+    "cta": "See what is included in your plan",
+    "plan_name": "Postpaid 499"
+  },
+  "offer": {
+    "offer_id": "OFF-RE-5GB",
+    "offer_type": "REENGAGEMENT",
+    "title": "5 GB bonus data",
+    "value_display": "5 GB",
+    "terms_summary": "5 GB bonus data valid for 30 days after activation.",
+    "valid_to_display": "31 Dec 2026"
+  },
+  "required_disclaimers": [
+    "offer_terms",
+    "unsubscribe"
+  ],
+  "template_skeleton": "greeting -> reason for writing -> facts -> CTA -> sign-off",
+  "forbidden": [
+    "threats",
+    "fees not provided"
+  ]
+}
