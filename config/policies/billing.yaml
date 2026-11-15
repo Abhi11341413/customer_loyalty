@@ -1,3 +1,31 @@
-# Reminder stages, grace period, gaps.
-# Owner: M2. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Reminder stages, grace period, gaps (CLAUDE.md §6.1).
+# Owner: M2. Values are ASSUMPTIONS (illustrative, configurable) — NOT official company policy.
+version: "1.0"
+currency: INR
+grace_days: 0                 # days after due date before a bill counts as overdue
+                              # (must equal segments.yaml features.grace_days, M1)
+reminder_stages:              # must be contiguous and non-overlapping (validated at load)
+  - stage: 1
+    name: courteous
+    min_days_overdue: 1
+    max_days_overdue: 10
+    tone: courteous
+    template_id: billing_reminder_stage1
+  - stage: 2
+    name: follow_up
+    min_days_overdue: 11
+    max_days_overdue: 20
+    tone: polite_follow_up
+    template_id: billing_reminder_stage2
+  - stage: 3
+    name: firm
+    min_days_overdue: 21
+    max_days_overdue: 60
+    tone: firm_respectful
+    template_id: billing_reminder_stage3
+beyond_max_stage: ESCALATE     # > 60 days: human/collections process, no automated draft
+min_days_between_reminders: 7  # duplicate-reminder guard (per bill)
+no_stage_skipping: true        # send the next stage due, never jump from none to stage 3
+bill_lookback_months: 3        # bills issued in the last N months are considered
+                               # (must equal segments.yaml features.bill_lookback_months, M1)
+support_path: "Reply to this email or visit the Help section of your account to ask a question or raise a dispute."
