@@ -1,0 +1,342 @@
+{
+  "customer_id": "C0009",
+  "as_of_date": "2026-11-15",
+  "first_name": "Yuki",
+  "customer_since": "2024-04-10",
+  "account_status": "ACTIVE",
+  "contact_preferences": {
+    "email_service_consent": true,
+    "email_marketing_consent": true,
+    "email_opt_out": false,
+    "preferred_channel": "EMAIL",
+    "do_not_contact_until": null,
+    "consent_updated_at": "2024-04-10T00:00:00Z"
+  },
+  "plans": [
+    {
+      "customer_plan_id": "CP-C0009-1",
+      "plan_id": "PL-POST-499",
+      "plan_name": "Postpaid 499",
+      "plan_category": "POSTPAID",
+      "start_date": "2024-04-10",
+      "end_date": null,
+      "status": "ACTIVE"
+    }
+  ],
+  "activity": [
+    {
+      "month": "2025-11",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2025-11-28"
+    },
+    {
+      "month": "2025-12",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2025-12-28"
+    },
+    {
+      "month": "2026-01",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2026-01-28"
+    },
+    {
+      "month": "2026-02",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2026-02-28"
+    },
+    {
+      "month": "2026-03",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2026-03-28"
+    },
+    {
+      "month": "2026-04",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2026-04-28"
+    },
+    {
+      "month": "2026-05",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2026-05-28"
+    },
+    {
+      "month": "2026-06",
+      "active_days": 16,
+      "usage_events": 33,
+      "last_activity_date": "2026-06-28"
+    },
+    {
+      "month": "2026-07",
+      "active_days": 18,
+      "usage_events": 35,
+      "last_activity_date": "2026-07-28"
+    },
+    {
+      "month": "2026-08",
+      "active_days": 17,
+      "usage_events": 34,
+      "last_activity_date": "2026-08-28"
+    },
+    {
+      "month": "2026-09",
+      "active_days": 18,
+      "usage_events": 36,
+      "last_activity_date": "2026-09-28"
+    },
+    {
+      "month": "2026-10",
+      "active_days": 18,
+      "usage_events": 35,
+      "last_activity_date": "2026-10-28"
+    },
+    {
+      "month": "2026-11",
+      "active_days": 9,
+      "usage_events": 18,
+      "last_activity_date": "2026-11-13"
+    }
+  ],
+  "bills": [
+    {
+      "bill_id": "B-C0009-2025-09",
+      "billing_period": "2025-09",
+      "issue_date": "2025-09-20",
+      "due_date": "2025-10-04",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2025-10",
+      "billing_period": "2025-10",
+      "issue_date": "2025-10-20",
+      "due_date": "2025-11-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2025-11",
+      "billing_period": "2025-11",
+      "issue_date": "2025-11-20",
+      "due_date": "2025-12-04",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2025-12",
+      "billing_period": "2025-12",
+      "issue_date": "2025-12-20",
+      "due_date": "2026-01-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-01",
+      "billing_period": "2026-01",
+      "issue_date": "2026-01-20",
+      "due_date": "2026-02-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-02",
+      "billing_period": "2026-02",
+      "issue_date": "2026-02-20",
+      "due_date": "2026-03-06",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-03",
+      "billing_period": "2026-03",
+      "issue_date": "2026-03-20",
+      "due_date": "2026-04-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-04",
+      "billing_period": "2026-04",
+      "issue_date": "2026-04-20",
+      "due_date": "2026-05-04",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-05",
+      "billing_period": "2026-05",
+      "issue_date": "2026-05-20",
+      "due_date": "2026-06-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-06",
+      "billing_period": "2026-06",
+      "issue_date": "2026-06-20",
+      "due_date": "2026-07-04",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-07",
+      "billing_period": "2026-07",
+      "issue_date": "2026-07-20",
+      "due_date": "2026-08-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-08",
+      "billing_period": "2026-08",
+      "issue_date": "2026-08-20",
+      "due_date": "2026-09-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-09",
+      "billing_period": "2026-09",
+      "issue_date": "2026-09-20",
+      "due_date": "2026-10-04",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "PAID",
+      "dispute_status": "NONE"
+    },
+    {
+      "bill_id": "B-C0009-2026-10",
+      "billing_period": "2026-10",
+      "issue_date": "2026-10-20",
+      "due_date": "2026-11-03",
+      "amount_due_minor": 49900,
+      "currency": "INR",
+      "status": "UNPAID",
+      "dispute_status": "NONE"
+    }
+  ],
+  "payments": [
+    {
+      "payment_id": "P-C0009-2025-09-1",
+      "bill_id": "B-C0009-2025-09",
+      "paid_date": "2025-10-01",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2025-10-1",
+      "bill_id": "B-C0009-2025-10",
+      "paid_date": "2025-10-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2025-11-1",
+      "bill_id": "B-C0009-2025-11",
+      "paid_date": "2025-12-01",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2025-12-1",
+      "bill_id": "B-C0009-2025-12",
+      "paid_date": "2025-12-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-01-1",
+      "bill_id": "B-C0009-2026-01",
+      "paid_date": "2026-01-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-02-1",
+      "bill_id": "B-C0009-2026-02",
+      "paid_date": "2026-03-03",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-03-1",
+      "bill_id": "B-C0009-2026-03",
+      "paid_date": "2026-03-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-04-1",
+      "bill_id": "B-C0009-2026-04",
+      "paid_date": "2026-05-01",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-05-1",
+      "bill_id": "B-C0009-2026-05",
+      "paid_date": "2026-05-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-06-1",
+      "bill_id": "B-C0009-2026-06",
+      "paid_date": "2026-07-01",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-07-1",
+      "bill_id": "B-C0009-2026-07",
+      "paid_date": "2026-07-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-08-1",
+      "bill_id": "B-C0009-2026-08",
+      "paid_date": "2026-08-31",
+      "amount_paid_minor": 49900
+    },
+    {
+      "payment_id": "P-C0009-2026-09-1",
+      "bill_id": "B-C0009-2026-09",
+      "paid_date": "2026-10-01",
+      "amount_paid_minor": 49900
+    }
+  ],
+  "communications": [
+    {
+      "comm_id": "CM-C0009-1",
+      "sent_at": "2026-11-05T09:00:00Z",
+      "channel": "EMAIL",
+      "category": "SERVICE",
+      "objective": "BILLING_REMINDER",
+      "reminder_stage": 1,
+      "related_bill_id": "B-C0009-2026-10",
+      "offer_id": null,
+      "draft_id": null,
+      "source": "HISTORICAL_SEED"
+    }
+  ]
+}

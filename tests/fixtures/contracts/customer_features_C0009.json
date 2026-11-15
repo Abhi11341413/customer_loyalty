@@ -1,0 +1,28 @@
+{
+  "customer_id": "C0009",
+  "as_of_date": "2026-11-15",
+  "account_status": "ACTIVE",
+  "tenure_months": 31,
+  "active_plan_count": 1,
+  "active_plan_ids": [
+    "PL-POST-499"
+  ],
+  "months_observed": 6,
+  "active_months_last_6": 6,
+  "recent_activity_avg": 35.0,
+  "prior_activity_avg": 34.0,
+  "activity_trend_ratio": 1.0294,
+  "activity_cv_6m": 0.0278,
+  "days_since_last_activity": 2,
+  "bills_last_12m": 12,
+  "on_time_bills_last_12m": 11,
+  "on_time_payment_rate_12m": 0.9167,
+  "late_payments_last_6m": 0,
+  "current_bill_state": "OVERDUE",
+  "current_bill_id": "B-C0009-2026-10",
+  "bill_conflict_type": null,
+  "days_overdue": 12,
+  "outstanding_minor": 49900,
+  "missing_features": [],
+  "data_quality_flags": []
+}

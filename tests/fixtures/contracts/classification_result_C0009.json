@@ -1,0 +1,88 @@
+{
+  "customer_id": "C0009",
+  "as_of_date": "2026-11-15",
+  "engagement_segment": "CONSISTENT",
+  "segments": [
+    "CONSISTENT",
+    "LOYALTY_CANDIDATE",
+    "PAYMENT_REMINDER"
+  ],
+  "primary_segment": "PAYMENT_REMINDER",
+  "reason_codes": [
+    {
+      "code": "ENG_ACTIVE_MONTHS",
+      "segment": "CONSISTENT",
+      "params": {
+        "active_months": 6,
+        "min_active_months": 5
+      },
+      "text": "Active in 6 of the last 6 months (minimum 5)."
+    },
+    {
+      "code": "ENG_NO_MATERIAL_DECLINE",
+      "segment": "CONSISTENT",
+      "params": {
+        "trend_pct": 103
+      },
+      "text": "Recent activity is 103% of the prior 3 months (no material decline)."
+    },
+    {
+      "code": "ENG_STABLE_USAGE",
+      "segment": "CONSISTENT",
+      "params": {
+        "cv": 0.0278,
+        "max_cv": 0.5
+      },
+      "text": "Monthly usage is stable (variation 0.0278, maximum 0.5)."
+    },
+    {
+      "code": "PAY_ON_TIME_RATE",
+      "segment": "CONSISTENT",
+      "params": {
+        "on_time": 11,
+        "bills": 12,
+        "rate_pct": 92,
+        "min_pct": 80
+      },
+      "text": "11 of 12 bills in the last 12 months paid on time (92%; minimum 80%)."
+    },
+    {
+      "code": "LOY_TENURE_MONTHS",
+      "segment": "LOYALTY_CANDIDATE",
+      "params": {
+        "tenure_months": 31,
+        "min_tenure_months": 12
+      },
+      "text": "Customer for 31 months (minimum 12)."
+    },
+    {
+      "code": "LOY_PERFECT_RECENT_PAYMENTS",
+      "segment": "LOYALTY_CANDIDATE",
+      "params": {},
+      "text": "No late payments in the last 6 months."
+    },
+    {
+      "code": "LOY_ACTIVE_PLAN",
+      "segment": "LOYALTY_CANDIDATE",
+      "params": {
+        "active_plan_count": 1
+      },
+      "text": "1 active plan(s)."
+    },
+    {
+      "code": "BILL_OVERDUE_DAYS",
+      "segment": "PAYMENT_REMINDER",
+      "params": {
+        "bill_id": "B-C0009-2026-10",
+        "days_overdue": 12
+      },
+      "text": "Bill B-C0009-2026-10 is 12 day(s) overdue."
+    }
+  ],
+  "confidence": 0.875,
+  "confidence_band": "HIGH",
+  "missing_features": [],
+  "ruleset_version": "segments.yaml@485466b",
+  "classification_id": null,
+  "shadow": null
+}
