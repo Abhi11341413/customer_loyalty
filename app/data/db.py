@@ -1,6 +1,7 @@
 """SQLAlchemy engine and session factory.
 
-Owner: M1.
+Owner: M1. Minimal version written by M4 so the review/delivery/audit tables can be used;
+M1 please review/extend.
 """
 
 from collections.abc import Iterator

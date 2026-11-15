@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "customer-engagement-assistant"
 version = "0.1.0"
@@ -22,6 +26,8 @@ dependencies = [
 dev = ["pytest", "pytest-cov", "ruff"]
 # Add exactly one LLM provider SDK once the team picks the LLM provider.
 
+# Flat layout has many top-level folders (data/, docs/, logs/ ...); without an explicit
+# list setuptools refuses to build and `pip install -e .` fails.
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
@@ -35,6 +41,10 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI's dependency-injection idiom uses these calls as parameter defaults.
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,0 +1,6 @@
+# Streamlit sends anonymous usage statistics by default; keep the demo fully local.
+[browser]
+gatherUsageStats = false
+
+[server]
+headless = true
