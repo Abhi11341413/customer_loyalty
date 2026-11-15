@@ -1,20 +1,14 @@
 """BillingDecision, OfferDecision, ContactDecision, StrategyDecision.
 
-Owner: SHARED — all owners must approve changes (CLAUDE.md §12.1).
+Owner: SHARED — all owners must approve changes (CLAUDE.md §12.1). Produced by M2.
 
-Two groups of models live here:
+Decision outputs of ``app/policy/`` (§6, §7). They are frozen so no downstream
+component can mutate a policy decision.
 
-1. **Input records** the policy engine reads (bills, payments, communication history,
-   contact preferences, campaigns, offers, redemptions). They mirror the tables in §4.4.
-   M1's ``CustomerProfile`` should reuse these classes rather than redefine them.
-2. **Decision outputs** produced by ``app/policy/`` (§6, §7). They are frozen so no
-   downstream component can mutate a policy decision.
-
-Money is always integer minor units (paise) — D11.
+Input records are NOT redefined here — the policy engine reads M1's contracts:
+``app.schemas.customer`` (BillingRecord, Payment, CommunicationRecord, ContactPreferences)
+and ``app.schemas.campaign`` (Campaign, CampaignOffer, OfferRedemption).
 """
-
-from datetime import date, datetime
-from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -24,130 +18,20 @@ from app.schemas.enums import (
     MessageCategory,
     Objective,
     OfferType,
-    OfferValueType,
     Segment,
 )
 
-_RECORD = ConfigDict(extra="forbid", frozen=True)
 _DECISION = ConfigDict(extra="forbid", frozen=True)
 
 
-# --------------------------------------------------------------------------- inputs
+class OfferCustomerContext(BaseModel):
+    """The minimal customer facts offer eligibility needs.
 
-
-class BillingRecord(BaseModel):
-    """One bill (T6). ``due_date``/``amount_due_minor`` may be missing in bad data."""
-
-    model_config = _RECORD
-
-    bill_id: str
-    customer_id: str
-    billing_period: str = Field(pattern=r"^\d{4}-\d{2}$")
-    issue_date: date
-    due_date: date | None = None
-    amount_due_minor: int | None = None
-    currency: str = "INR"
-    status: Literal["PAID", "UNPAID", "PARTIALLY_PAID", "WAIVED"]
-    dispute_status: Literal["NONE", "OPEN", "RESOLVED"] = "NONE"
-
-
-class Payment(BaseModel):
-    """One (possibly partial) payment against a bill (T7)."""
-
-    model_config = _RECORD
-
-    payment_id: str
-    bill_id: str
-    paid_date: date
-    amount_paid_minor: int = Field(gt=0)
-
-
-class CommRecord(BaseModel):
-    """Metadata of a past message (T8). Never contains the body."""
-
-    model_config = _RECORD
-
-    comm_id: str
-    customer_id: str
-    sent_at: datetime
-    channel: str = "EMAIL"
-    category: MessageCategory
-    objective: str
-    reminder_stage: int | None = Field(default=None, ge=1, le=3)
-    related_bill_id: str | None = None
-    offer_id: str | None = None
-    draft_id: str | None = None
-    source: Literal["HISTORICAL_SEED", "MOCK_DELIVERY"] = "HISTORICAL_SEED"
-
-
-class ContactPreferences(BaseModel):
-    """Consent and communication preferences (T2)."""
-
-    model_config = _RECORD
-
-    customer_id: str
-    email_service_consent: bool
-    email_marketing_consent: bool
-    email_opt_out: bool = False
-    preferred_channel: Literal["EMAIL", "SMS", "NONE"] = "EMAIL"
-    do_not_contact_until: date | None = None
-
-
-class Campaign(BaseModel):
-    """Marketing campaign (T9)."""
-
-    model_config = _RECORD
-
-    campaign_id: str
-    name: str
-    status: Literal["DRAFT", "APPROVED", "ACTIVE", "PAUSED", "ENDED"]
-    start_date: date
-    end_date: date
-
-
-class CampaignOffer(BaseModel):
-    """Approved offer (T10).
-
-    Deliberately permissive on ``value``/``title``/``terms_summary`` so that incomplete
-    rows reach the eligibility engine and are rejected with ``OFFER_TERMS_INCOMPLETE``
-    instead of crashing the loader.
+    Built by the orchestrator from M1's ``CustomerFeatures`` + ``ClassificationResult``
+    and M2's ``BillingDecision`` (the bill state used is the policy engine's, §6.2).
     """
 
-    model_config = _RECORD
-
-    offer_id: str
-    campaign_id: str
-    offer_type: OfferType
-    title: str
-    value_type: OfferValueType
-    value: int
-    terms_summary: str
-    valid_from: date
-    valid_to: date
-    channel: Literal["EMAIL", "SMS", "ANY"]
-    eligible_segments: list[Segment]
-    min_tenure_months: int = 0
-    requires_no_overdue: bool = True
-    max_per_customer: int = 1
-    total_cap: int | None = None
-    total_redeemed: int = 0
-
-
-class OfferRedemption(BaseModel):
-    """A customer redeemed an offer (T12)."""
-
-    model_config = _RECORD
-
-    redemption_id: str
-    offer_id: str
-    customer_id: str
-    redeemed_at: datetime
-
-
-class OfferCustomerContext(BaseModel):
-    """The minimal customer facts offer eligibility needs (built from M1's features)."""
-
-    model_config = _RECORD
+    model_config = _DECISION
 
     customer_id: str
     segments: frozenset[Segment]
@@ -155,9 +39,6 @@ class OfferCustomerContext(BaseModel):
     active_plan_ids: frozenset[str] = frozenset()
     account_status: AccountStatus
     bill_state: BillState
-
-
-# --------------------------------------------------------------------------- decisions
 
 
 class BillingDecision(BaseModel):
