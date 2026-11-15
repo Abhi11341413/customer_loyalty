@@ -181,3 +181,55 @@ class AccountStatus(StrEnum):
     ACTIVE = "ACTIVE"
     SUSPENDED = "SUSPENDED"
     CLOSED = "CLOSED"
+
+
+# --------------------------------------------------------------------------- policy (M2)
+
+
+class MessageCategory(StrEnum):
+    """Consent category of a message (ASM A-05)."""
+
+    SERVICE = "SERVICE"
+    MARKETING = "MARKETING"
+
+
+class Objective(StrEnum):
+    """Communication objective chosen by the StrategySelector (§7.1)."""
+
+    APPRECIATION = "APPRECIATION"
+    LOYALTY_REWARD = "LOYALTY_REWARD"
+    REENGAGEMENT = "REENGAGEMENT"
+    WINBACK = "WINBACK"
+    BILLING_REMINDER_COURTEOUS = "BILLING_REMINDER_COURTEOUS"
+    BILLING_REMINDER_FOLLOWUP = "BILLING_REMINDER_FOLLOWUP"
+    BILLING_REMINDER_FIRM = "BILLING_REMINDER_FIRM"
+    NO_CONTACT = "NO_CONTACT"
+    NO_CONTACT_BY_POLICY = "NO_CONTACT_BY_POLICY"
+    ESCALATE = "ESCALATE"
+
+
+BILLING_REMINDER_OBJECTIVES: frozenset[Objective] = frozenset(
+    {
+        Objective.BILLING_REMINDER_COURTEOUS,
+        Objective.BILLING_REMINDER_FOLLOWUP,
+        Objective.BILLING_REMINDER_FIRM,
+    }
+)
+
+#: Objectives that never produce a draft (no LLM call).
+NON_DRAFT_OBJECTIVES: frozenset[Objective] = frozenset(
+    {Objective.NO_CONTACT, Objective.NO_CONTACT_BY_POLICY, Objective.ESCALATE}
+)
+
+
+class OfferType(StrEnum):
+    LOYALTY_REWARD = "LOYALTY_REWARD"
+    REENGAGEMENT = "REENGAGEMENT"
+    APPRECIATION_PERK = "APPRECIATION_PERK"
+
+
+class OfferValueType(StrEnum):
+    PERCENT_DISCOUNT = "PERCENT_DISCOUNT"
+    FLAT_CREDIT_MINOR = "FLAT_CREDIT_MINOR"
+    BONUS_DATA_GB = "BONUS_DATA_GB"
+    POINTS = "POINTS"
