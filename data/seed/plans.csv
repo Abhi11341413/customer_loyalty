@@ -1,0 +1,7 @@
+plan_id,plan_name,plan_category,monthly_price_minor,is_active
+PL-POST-499,Postpaid 499,POSTPAID,49900,1
+PL-POST-599,Postpaid 599,POSTPAID,59900,1
+PL-POST-749,Postpaid 749,POSTPAID,74900,1
+PL-PRE-299,Prepaid 299,PREPAID,29900,1
+PL-BB-799,Broadband 799,BROADBAND,79900,1
+PL-POST-399-OLD,Postpaid 399 (retired),POSTPAID,39900,0

@@ -4,44 +4,57 @@ Owner: M1. Minimal version written by M4 so the review/delivery/audit tables can
 M1 please review/extend.
 """
 
-from __future__ import annotations
-
-from pathlib import Path
+from collections.abc import Iterator
+from functools import lru_cache
 
 from sqlalchemy import Engine, create_engine, event
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from app.data.models import Base
+from config.settings import get_settings
 
-def make_engine(database_url: str) -> Engine:
-    """Create an engine; in-memory SQLite uses a single shared connection (tests)."""
+
+def make_engine(url: str) -> Engine:
+    """Create an engine with SQLite foreign keys enforced.
+
+    In-memory URLs share one connection so tests see a single database.
+    """
     kwargs: dict = {}
-    if database_url.startswith("sqlite"):
-        kwargs["connect_args"] = {"check_same_thread": False}
-        if database_url in ("sqlite://", "sqlite:///:memory:"):
-            kwargs["poolclass"] = StaticPool
-        else:
-            db_path = database_url.removeprefix("sqlite:///")
-            Path(db_path).parent.mkdir(parents=True, exist_ok=True)
-    engine = create_engine(database_url, **kwargs)
+    if url in ("sqlite://", "sqlite:///:memory:"):
+        kwargs = {"connect_args": {"check_same_thread": False}, "poolclass": StaticPool}
+    elif url.startswith("sqlite"):
+        kwargs = {"connect_args": {"check_same_thread": False}}
+    engine = create_engine(url, **kwargs)
 
-    if database_url.startswith("sqlite"):
+    if url.startswith("sqlite"):
 
         @event.listens_for(engine, "connect")
-        def _enable_fk(dbapi_conn, _record) -> None:  # noqa: ANN001
-            cursor = dbapi_conn.cursor()
-            cursor.execute("PRAGMA foreign_keys=ON")
-            cursor.close()
+        def _fk_on(dbapi_conn, _record):  # pragma: no cover - trivial
+            cur = dbapi_conn.cursor()
+            cur.execute("PRAGMA foreign_keys=ON")
+            cur.close()
 
     return engine
 
 
-def make_session_factory(engine: Engine) -> sessionmaker[Session]:
-    return sessionmaker(bind=engine, expire_on_commit=False)
-
-
-def init_db(engine: Engine) -> None:
-    """Create all known tables (idempotent)."""
-    from app.data.models import Base
-
+def create_all(engine: Engine) -> None:
     Base.metadata.create_all(engine)
+
+
+@lru_cache
+def default_engine() -> Engine:
+    return make_engine(get_settings().database_url)
+
+
+def session_factory(engine: Engine | None = None) -> sessionmaker[Session]:
+    return sessionmaker(bind=engine or default_engine(), expire_on_commit=False)
+
+
+def get_session() -> Iterator[Session]:
+    """FastAPI dependency. M4 can override it via app.dependency_overrides."""
+    session = session_factory()()
+    try:
+        yield session
+    finally:
+        session.close()

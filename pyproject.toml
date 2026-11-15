@@ -28,6 +28,10 @@ dev = ["pytest", "pytest-cov", "ruff"]
 
 # Flat layout has many top-level folders (data/, docs/, logs/ ...); without an explicit
 # list setuptools refuses to build and `pip install -e .` fails.
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [tool.setuptools.packages.find]
 include = ["app*", "config*"]
 
@@ -44,5 +48,6 @@ extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--import-mode=importlib"
 pythonpath = ["."]
 markers = ["live: calls a real LLM provider (needs API key)"]

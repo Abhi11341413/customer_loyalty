@@ -1,3 +1,29 @@
-# Reason code -> text templates.
-# Owner: M1. Values are ASSUMPTIONS (illustrative, configurable).
-# TODO
+# Reason code -> fixed text template (Python str.format with the code's params).
+# Owner: M1. Texts are never produced by the LLM. Every code cites concrete feature values.
+version: "1.0"
+
+codes:
+  DATA_TENURE_SHORT: "Customer for {tenure_months} month(s); at least {min_tenure_months} needed to classify."
+  DATA_ACTIVITY_MISSING: "Activity data available for {months_observed} of the last 6 months; at least {min_months_observed} needed."
+  DATA_FEATURE_MISSING: "Required feature(s) could not be computed: {features}."
+
+  ENG_INACTIVE_DAYS: "No activity for {days} days (last activity {last_activity}); threshold is {threshold} days."
+  ENG_ZERO_RECENT_ACTIVITY: "No usage in the last 3 full months while a plan is still active."
+
+  ENG_ACTIVITY_DROP_PCT: "Average monthly activity fell {drop_pct}% ({prior_avg} → {recent_avg}) versus the prior 3 months; threshold is {threshold_pct}%."
+  ENG_PRIOR_BASELINE: "Prior 3-month average was {prior_avg} events/month (minimum baseline {min_prior_avg})."
+
+  ENG_ACTIVE_MONTHS: "Active in {active_months} of the last 6 months (minimum {min_active_months})."
+  ENG_STABLE_USAGE: "Monthly usage is stable (variation {cv}, maximum {max_cv})."
+  ENG_NO_MATERIAL_DECLINE: "Recent activity is {trend_pct}% of the prior 3 months (no material decline)."
+  PAY_ON_TIME_RATE: "{on_time} of {bills} bills in the last 12 months paid on time ({rate_pct}%; minimum {min_pct}%)."
+  ENG_NO_TARGET_PATTERN: "Active, but not consistent, declining or dormant; no targeted pattern."
+
+  LOY_TENURE_MONTHS: "Customer for {tenure_months} months (minimum {min_tenure_months})."
+  LOY_PERFECT_RECENT_PAYMENTS: "No late payments in the last 6 months."
+  LOY_ACTIVE_PLAN: "{active_plan_count} active plan(s)."
+
+  BILL_OVERDUE_DAYS: "Bill {bill_id} is {days_overdue} day(s) overdue."
+  BILL_PARTIAL_PAYMENT: "Bill {bill_id} is partially paid; {outstanding} outstanding."
+  BILL_DISPUTED: "Bill {bill_id} has an open dispute; reminders are suppressed and the case needs human review."
+  BILL_DATA_CONFLICT: "Billing data for {bill_id} is contradictory ({conflict_type}); the case needs human review."

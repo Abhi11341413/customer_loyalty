@@ -1,10 +1,14 @@
-"""Enums: segments, objectives, draft states, severities, reason codes.
+"""Enums shared across modules: segments, bill states, confidence bands, account status.
 
 Owner: SHARED. Drafted by M4 for CP0 from the blueprint (sections 5.1, 7.1, 9.3, 9.6, 4.4);
 needs approval from all owners before merge.
 """
 
 from __future__ import annotations
+
+Owner: SHARED — changes need approval from all affected owners.
+Other members add their enums (objectives, draft states, severities, ...) here in small PRs.
+"""
 
 from enum import StrEnum
 
@@ -60,6 +64,30 @@ class MessageCategory(StrEnum):
 
 
 class BillState(StrEnum):
+    """Engagement axis — exactly one per customer, evaluated in precedence order."""
+
+    INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
+    DORMANT = "DORMANT"
+    DECLINING_ACTIVITY = "DECLINING_ACTIVITY"
+    CONSISTENT = "CONSISTENT"
+    STANDARD = "STANDARD"
+
+
+class Segment(StrEnum):
+    """Every label that can appear in ClassificationResult.segments."""
+
+    INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
+    DORMANT = "DORMANT"
+    DECLINING_ACTIVITY = "DECLINING_ACTIVITY"
+    CONSISTENT = "CONSISTENT"
+    STANDARD = "STANDARD"
+    LOYALTY_CANDIDATE = "LOYALTY_CANDIDATE"  # qualifier, only with CONSISTENT
+    PAYMENT_REMINDER = "PAYMENT_REMINDER"  # billing flag, independent of engagement
+
+
+class BillState(StrEnum):
+    """Derived state of the customer's current bill."""
+
     PAID = "PAID"
     NOT_YET_DUE = "NOT_YET_DUE"
     OVERDUE = "OVERDUE"
@@ -137,3 +165,19 @@ class AuditEventType(StrEnum):
     DELIVERED = "DELIVERED"
     REFUSED = "REFUSED"
     ESCALATED = "ESCALATED"
+class BillConflictType(StrEnum):
+    MISSING_FIELD = "MISSING_FIELD"
+    STATUS_PAYMENT_MISMATCH = "STATUS_PAYMENT_MISMATCH"
+    OVERPAYMENT = "OVERPAYMENT"
+
+
+class ConfidenceBand(StrEnum):
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
+class AccountStatus(StrEnum):
+    ACTIVE = "ACTIVE"
+    SUSPENDED = "SUSPENDED"
+    CLOSED = "CLOSED"

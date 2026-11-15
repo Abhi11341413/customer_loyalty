@@ -1,0 +1,62 @@
+{
+  "customer_id": "C0010",
+  "as_of_date": "2026-11-15",
+  "engagement_segment": "CONSISTENT",
+  "segments": [
+    "CONSISTENT"
+  ],
+  "primary_segment": "CONSISTENT",
+  "reason_codes": [
+    {
+      "code": "ENG_ACTIVE_MONTHS",
+      "segment": "CONSISTENT",
+      "params": {
+        "active_months": 6,
+        "min_active_months": 5
+      },
+      "text": "Active in 6 of the last 6 months (minimum 5)."
+    },
+    {
+      "code": "ENG_NO_MATERIAL_DECLINE",
+      "segment": "CONSISTENT",
+      "params": {
+        "trend_pct": 99
+      },
+      "text": "Recent activity is 99% of the prior 3 months (no material decline)."
+    },
+    {
+      "code": "ENG_STABLE_USAGE",
+      "segment": "CONSISTENT",
+      "params": {
+        "cv": 0.0223,
+        "max_cv": 0.5
+      },
+      "text": "Monthly usage is stable (variation 0.0223, maximum 0.5)."
+    },
+    {
+      "code": "PAY_ON_TIME_RATE",
+      "segment": "CONSISTENT",
+      "params": {
+        "on_time": 8,
+        "bills": 9,
+        "rate_pct": 89,
+        "min_pct": 80
+      },
+      "text": "8 of 9 bills in the last 12 months paid on time (89%; minimum 80%)."
+    },
+    {
+      "code": "BILL_DISPUTED",
+      "segment": null,
+      "params": {
+        "bill_id": "B-C0010-2026-10"
+      },
+      "text": "Bill B-C0010-2026-10 has an open dispute; reminders are suppressed and the case needs human review."
+    }
+  ],
+  "confidence": 0.852,
+  "confidence_band": "HIGH",
+  "missing_features": [],
+  "ruleset_version": "segments.yaml@485466b",
+  "classification_id": null,
+  "shadow": null
+}

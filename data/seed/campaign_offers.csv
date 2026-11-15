@@ -1,1 +1,5 @@
 offer_id,campaign_id,offer_type,title,value_type,value,terms_summary,valid_from,valid_to,channel,eligible_segments,min_tenure_months,requires_no_overdue,max_per_customer,total_cap,total_redeemed
+OFF-LOY-200,CMP-LOY-Q4,LOYALTY_REWARD,Loyalty credit,FLAT_CREDIT_MINOR,20000,"One-time ₹200 bill credit, applied on next bill.",2026-11-01,2026-12-31,EMAIL,"[""LOYALTY_CANDIDATE""]",12,1,1,500,37
+OFF-LOY-OLD,CMP-LOY-Q2,LOYALTY_REWARD,Loyalty credit (spring),FLAT_CREDIT_MINOR,10000,"One-time ₹100 bill credit, applied on next bill.",2026-04-01,2026-06-30,EMAIL,"[""LOYALTY_CANDIDATE""]",12,1,1,500,412
+OFF-RE-5GB,CMP-RE-Q4,REENGAGEMENT,5 GB bonus data,BONUS_DATA_GB,5,5 GB bonus data valid for 30 days after activation.,2026-10-01,2026-12-31,EMAIL,"[""DECLINING_ACTIVITY"", ""DORMANT""]",0,1,1,1000,112
+OFF-PERK-10,CMP-PERK-PAUSED,APPRECIATION_PERK,10% off accessories,PERCENT_DISCOUNT,10,10% off one accessory purchase in our online store.,2026-10-01,2026-12-31,EMAIL,"[""CONSISTENT""]",6,1,1,,0
